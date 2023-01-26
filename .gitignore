@@ -1,0 +1,11 @@
+.dockerignore
+Mkt3.sln.DotSettings.user
+.idea/.idea.Mkt3/.idea/.gitignore
+.idea/.idea.Mkt3/.idea/encodings.xml
+.idea/.idea.Mkt3/.idea/indexLayout.xml
+.idea/.idea.Mkt3/.idea/vcs.xml
+Mkt3/bin/Debug/net7.0/Blazorise.Bootstrap.dll
+Mkt3/bin/Debug/net7.0/Blazorise.dll
+Mkt3/bin/Debug/net7.0/Blazorise.Icons.FontAwesome.dll
+Mkt3/bin/Debug/net7.0/Blazorise.TreeView.dll
+Mkt3/bin/Debug/net7.0/Mkt3 (Jeremy Brown's conflicted copy 2023-01-25).pdb
