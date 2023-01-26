@@ -1,0 +1,84 @@
+@page "/editQuestion/{questionID}"
+@page "/editQuestion"
+@using Mkt3.Data
+@using Mkt3.Components
+
+
+
+@inject QuestionService QuestionService;
+
+<PageTitle>Question Editor</PageTitle>
+
+<h1>Edit or Add Questions</h1>
+
+<p>This page will allow you to edit a question</p>
+
+
+@if (_question == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+
+        
+    <div class="form-field">
+        <div class="form-field-label" for="lastNameInput">Type: </div>
+        <div class="form-field-control">
+            <select value="@_question.type" @onchange="QuestionTypeChange">
+                <option value="LongAnswer">Long Answer</option>>
+                <option value="ShortAnswer">Short Answer</option>>
+                <option value="TF">True/False</option>>
+            </select>
+        </div>
+    </div>
+
+    @if (_showTF)
+    {
+        <TrueFalseComponent question=_question/>
+    }
+    @if (_showSA)
+    {
+        <ShortAnswerComponent question=_question/>
+    }
+    
+}
+@code {
+
+    [Parameter]
+    public string questionID { get; set; }
+
+    private Question? _question;
+    private bool _showTF = false;
+    private bool _showSA = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _question = await QuestionService.GetQuestionAsync(questionID);
+        showBlock(_question.type);
+    }
+
+    private void QuestionTypeChange(ChangeEventArgs obj)
+    {
+        var selected = obj.Value.ToString();
+        showBlock(selected);
+    }
+    
+    private void showBlock(string type) 
+    {
+
+        _showTF = false;
+        _showSA = false;
+        if (type == "TF")
+        {
+            _showTF = true;
+        }
+        else if (type == "ShortAnswer")
+        {
+            _showSA = true;
+        }
+    }
+
+}

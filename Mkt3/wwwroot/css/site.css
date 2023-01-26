@@ -66,3 +66,25 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.form-fields {
+    display: table;
+}
+
+.form-field {
+    display: table-row;
+}
+
+.form-field-label,
+.form-field-control,
+.form-field-comment {
+    display: table-cell;
+    padding: 3px 10px;
+}
+
+.form-field-label
+{
+    width: 105px;
+    text-align: right;
+    vertical-align: top;
+}

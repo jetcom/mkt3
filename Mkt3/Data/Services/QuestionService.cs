@@ -3,41 +3,47 @@ namespace Mkt3.Data;
 public class QuestionService
 {
 
-    private static readonly string[] Summaries = new[]
+    private List<Question> questionList = new()
     {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+
+        new Question
+        {
+            QuestionID = "stddev", type = "ShortAnswer", Prompt = "What is the stdDev of 5 and 6",
+            Solution = "no idea", Points = 1
+        },
+        new Question { QuestionID = "TFTest", type = "TF", Prompt = "This will work", Solution = "False", Points = 1 },
+        new Question
+        {
+            QuestionID = "SATest2", type = "ShortAnswer", Prompt = "This will work", Solution = "Maybe", Points = 5
+        }
     };
 
-    private ShortAnswerQuestion saq = new()
+    public async Task<Question[]> GetQuestionsByBank(string bank)
     {
-        QuestionID = "Test1", Points = 1, Prompt = "What is the standard deviation of the universe", Solution = "42.3"
-    };
+        return questionList.ToArray();
+
+   
+
+
+    }
+
 
     public Task<Question> GetQuestionAsync(string QuestionID)
     {
-        var q1 = new Question() { QuestionID = "Test1", Points = 3, Prompt = "Answer this!", Solution = "No!" };
-        return Task.FromResult(q1);
+        return Task.FromResult(questionList.First(q => q.QuestionID == QuestionID));
     }
 
-    public Task<TrueFalseQuestion> GetTFQuestionAsync(string QuestionID)
-    {
-        var q1 = new TrueFalseQuestion()
-            { QuestionID = "Test1", Points = 1, Prompt = "This is a TF Question", Solution = false };
-        return Task.FromResult(q1);
-    }
 
-    public Task<ShortAnswerQuestion> GetShortAnswerQuestion(string QuestionID)
-    {
-        return Task.FromResult(saq);
-
-    }
-
-    public async Task<bool> SaveShortAnswerQuestion(ShortAnswerQuestion question)
+ 
+    public async Task<bool> SaveShortAnswerQuestion(Question question)
     {
 
         try
         {
-            saq = question;
+            
+            var oldQuestion = (from q in questionList where q.QuestionID == question.QuestionID select q).First<Question>();
+            oldQuestion = question;
+            //saq = question;
             /*   repeater.Date = DateTime.Now;
                var pushRepeaterDefinition = Builders<History>
                    .Update.Push(h => h.RepeaterHistory, previousState);
@@ -64,7 +70,7 @@ public class QuestionService
     }
 
 
-    public async Task<bool> SaveTFQuestion(TrueFalseQuestion question)
+    public async Task<bool> SaveTFQuestion(Question question)
     {
 
         try

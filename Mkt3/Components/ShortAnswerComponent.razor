@@ -1,6 +1,6 @@
 @using Mkt3.Data
 @inject QuestionService QuestionService;
-@if (_question == null)
+@if (question == null)
 {
     <p>
         <em>Loading...</em>
@@ -8,36 +8,45 @@
 }
 else
 {
-    <EditForm Model="@_question" OnValidSubmit="@HandleValidSubmit">
-        <table class="table">
-            <tbody>
-            <tr><td>Prompt: </td><td><input @bind="@_question.Prompt"/></td></tr>
-            <tr><td>Solution: </td><td><input @bind="@_question.Solution"/></td></tr>
-            <tr><td>Points: </td><td>@_question.Points</td></tr>
-            </tbody>
-        </table>
-        <button type="submit">Save</button><button type="submit" @onclick="@(async () => ResetForm())">Cancel</button>
+    <EditForm Model="@question" OnValidSubmit="@HandleValidSubmit">
+        <div class="form-fields">
+        
+        <div class="form-field">
+            <div class="form-field-label" for="lastNameInput">Prompt: </div>
+            <div class="form-field-control"><textarea rows="4" cols="50" @bind="@question.Prompt"/></div>
+        </div>
+        <div class="form-field">
+            <div class="form-field-label" for="lastNameInput">Solution: </div>
+            <div class="form-field-control"><input size="50" @bind="@question.Solution"/></div>
+        </div>
+        <div class="form-field">
+            <div class="form-field-label" for="lastNameInput">Points: </div>
+            <div class="form-field-control"><input @bind="@question.Points"/></div>
+        </div>
+
+         <button type="submit">Save</button><button type="submit" @onclick="@(async () => ResetForm())">Cancel</button>
+         </div>
     </EditForm>
 }
 
 @code {
     [Parameter]
-    public string id { get; set; }
+    public Question question { get; set; }
     [Parameter]
     public string belongsTo { get; set; }
 
-    private ShortAnswerQuestion _question;
+
 
     protected override async Task OnInitializedAsync()
     {
-        _question = await QuestionService.GetShortAnswerQuestion("foo");
-   
+    //    _question = question as ShortAnswerQuestion;
+
     }
     
     private async Task HandleValidSubmit()
     {
        
-        if (await QuestionService.SaveShortAnswerQuestion(_question))
+        if (await QuestionService.SaveShortAnswerQuestion(question))
         {
            // NavManager.NavigateTo(_pageState.GetGoBackPage());
 

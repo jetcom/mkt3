@@ -1,0 +1,83 @@
+@using Mkt3.Data
+<h3>QuestionList</h3>
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <AuthorizeView>
+            <Authorized>
+                <th></th>
+            </Authorized>
+        </AuthorizeView>
+        <th>
+            <span @onclick="@(async () => await sortAsync("Title"))"><img width="12" src="@imageSortName"/>Title
+            </span> </th>
+        <th>
+            <span @onclick="@(async () => await sortAsync("Type"))"><img width="12" src="@imageSortName"/>Type
+            </span> </th>
+        <th>
+            <span @onclick="@(async () => await sortAsync("Prompt"))">
+                <img width="12" src="@imageSortName"/>
+                Prompt
+            </span> </th>
+
+
+        <th>
+            <span @onclick="@(async () => await sortAsync("Solutions"))">
+                <img width="12" src="@imageSortName"/>
+                Solutions
+            </span> </th>
+        <th>
+            <span @onclick="@(async () => await sortAsync("Points"))">
+                <img width="12" src="@imageSortName"/>
+                Points
+            </span> </th>
+   
+
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var question in questions)
+    {
+        <tr>
+             <AuthorizeView>
+             <Authorized>
+                    <td><a href="/editRepeater/@question.QuestionID"> <img width="12" src="@imageEditName"/></a></td>
+             </Authorized>
+             </AuthorizeView>
+                        <td><a href="/editQuestion/@question.QuestionID">@question.QuestionID</a></td>
+            <td>@question.type</td>
+            <td>@question.Prompt</td>
+    
+            <td>@question.Solution</td>
+            <td>@question.Points</td>
+
+
+        </tr>
+    }
+    </tbody>
+</table>
+@code {
+    [Parameter] 
+    public Question[] questions { get; set; }
+    
+    private string currentSort =  "RFreq";
+    private string currentOrder = "asc";
+    private string imageSortName = "images/sort-asc-white.png";
+    private string imageEditName = "images/edit-white.png";
+    
+    private Task sortAsync(string sortData)
+    {
+        
+        if (currentSort == sortData)
+        {
+            currentOrder = currentOrder == "asc" ? "desc" : "asc";
+            imageSortName = "images/sort-" + currentOrder + "-white.png";
+        }
+        currentSort = sortData;
+        
+        //questions = questions.AsQueryable().OrderBy(sortData + " "+ currentOrder).ToArray();
+        return Task.FromResult(true);
+    }
+}

@@ -1,0 +1,33 @@
+@page "/QuestionList"
+@using Mkt3.Data
+@using Mkt3.Components
+@inject QuestionService QuestionService;
+Select Course: <select>
+    <option value="csci320">CSCI.320</option>
+    <option value="csci420">CSCI.420</option>
+</select>
+@if (questions == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <QuestionListComponent questions=questions/>
+
+}
+
+@code {
+    [Parameter]
+    public string? questionBank { get; set; }
+
+    private Question[] questions;
+
+    
+    protected override async Task OnInitializedAsync()
+    {
+        questions = await QuestionService.GetQuestionsByBank("foo");
+        
+    }
+ 
+
+}
