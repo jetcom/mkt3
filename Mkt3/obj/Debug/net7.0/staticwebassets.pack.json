@@ -57,6 +57,22 @@
       "PackagePath": "staticwebassets/favicon.png"
     },
     {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/sort-asc-white.png",
+      "PackagePath": "staticwebassets/images/sort-asc-white.png"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/sort-asc.png",
+      "PackagePath": "staticwebassets/images/sort-asc.png"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/sort-desc-white.png",
+      "PackagePath": "staticwebassets/images/sort-desc-white.png"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/sort-desc.png",
+      "PackagePath": "staticwebassets/images/sort-desc.png"
+    },
+    {
       "Id": "obj/Debug/net7.0/staticwebassets/msbuild.Mkt3.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

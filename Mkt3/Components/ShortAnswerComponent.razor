@@ -1,5 +1,7 @@
 @using Mkt3.Data
+
 @inject QuestionService QuestionService;
+
 @if (question == null)
 {
     <p>
@@ -17,7 +19,7 @@ else
         </div>
         <div class="form-field">
             <div class="form-field-label" for="lastNameInput">Solution: </div>
-            <div class="form-field-control"><input size="50" @bind="@question.Solution"/></div>
+            <div class="form-field-control"><input size="50" @bind="@question.Solutions[0]"/></div>
         </div>
         <div class="form-field">
             <div class="form-field-label" for="lastNameInput">Points: </div>
@@ -32,30 +34,41 @@ else
 @code {
     [Parameter]
     public Question question { get; set; }
+    
+    [Parameter]
+    public EventCallback onResetClick { get; set; }
+    [Parameter]
+    public EventCallback onSaveClick { get; set; }
     [Parameter]
     public string belongsTo { get; set; }
-
+    
+    private bool reset = false;
 
 
     protected override async Task OnInitializedAsync()
     {
+
     //    _question = question as ShortAnswerQuestion;
 
     }
     
     private async Task HandleValidSubmit()
     {
-       
-        if (await QuestionService.SaveShortAnswerQuestion(question))
+        if (!reset)
         {
-           // NavManager.NavigateTo(_pageState.GetGoBackPage());
-
+            question.type = "Short Answer";
+            if (await QuestionService.SaveQuestion(question))
+            {
+    // NavManager.NavigateTo(_pageState.GetGoBackPage());
+                await onSaveClick.InvokeAsync();
+            }
         }
+        reset = false;
     }
-    private void ResetForm()
+    private async void ResetForm()
     {
-       /* repeater = previousState;
-        NavManager.NavigateTo(_pageState.GetGoBackPage());*/
+        reset = true;
+        await onResetClick.InvokeAsync();
         
     }
 }

@@ -18,7 +18,7 @@ else
          </div>
          <div class="form-field">
              <div class="form-field-label" for="lastNameInput">Solution: </div>
-             <div class="form-field-control"><select bind="@question.Solution"><option value="false">False</option><option value="true">True</option></select></div>
+             <div class="form-field-control"><select @bind="@question.Solutions[0]"><option value="false">false</option><option value="true">true</option></select></div>
          </div>
          <div class="form-field">
              <div class="form-field-label" for="lastNameInput">Points: </div>
@@ -34,31 +34,47 @@ else
 
     [Parameter]
     public Question question { get; set; }
+    
+    [Parameter]
+    public EventCallback onResetClick { get; set; }
+    [Parameter]
+    public EventCallback onSaveClick { get; set; }
     [Parameter]
     public string id { get; set; }
     [Parameter]
     public string belongsTo { get; set; }
 
+    
+    private bool reset = false;
+
 
 
     protected override async Task OnInitializedAsync()
     {
+        
         //_question = await QuestionService.GetTFQuestionAsync("foo");
     }
     
     private async Task HandleValidSubmit()
     {
-       
-        if (await QuestionService.SaveTFQuestion(question))
+        if (!reset)
         {
-    // NavManager.NavigateTo(_pageState.GetGoBackPage());
+            question.type = "True/False";
+            if (await QuestionService.SaveQuestion(question))
+            {
+     
 
+            }
+            await onSaveClick.InvokeAsync();
         }
+        reset = false;
     }
-    private void ResetForm()
+    private async Task<bool> ResetForm()
     {
-    /* repeater = previousState;
-        NavManager.NavigateTo(_pageState.GetGoBackPage());*/
-        
+        reset = true;
+        await onResetClick.InvokeAsync();
+        return false;
+    //NavManager.NavigateTo(_pageState.GetGoBackPage());*/
+
     }
 }

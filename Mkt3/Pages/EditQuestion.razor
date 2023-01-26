@@ -1,5 +1,6 @@
 @page "/editQuestion/{questionID}"
 @page "/editQuestion"
+@inject NavigationManager Navigation
 @using Mkt3.Data
 @using Mkt3.Components
 
@@ -22,26 +23,26 @@
 }
 else
 {
-
-        
+     
     <div class="form-field">
         <div class="form-field-label" for="lastNameInput">Type: </div>
         <div class="form-field-control">
-            <select value="@_question.type" @onchange="QuestionTypeChange">
-                <option value="LongAnswer">Long Answer</option>>
-                <option value="ShortAnswer">Short Answer</option>>
-                <option value="TF">True/False</option>>
+            <select value="@selectedType" @onchange="QuestionTypeChange">
+         	    @foreach (var id in types)
+         		{
+         			<option value="@id">@id</option>
+         		}
             </select>
         </div>
     </div>
 
     @if (_showTF)
     {
-        <TrueFalseComponent question=_question/>
+        <TrueFalseComponent question=_question onResetClick="Reset" onSaveClick="Save"/>
     }
     @if (_showSA)
     {
-        <ShortAnswerComponent question=_question/>
+        <ShortAnswerComponent question=_question onResetClick="Reset" onSaveClick="Save"/>
     }
     
 }
@@ -49,14 +50,20 @@ else
 
     [Parameter]
     public string questionID { get; set; }
+    
+
 
     private Question? _question;
     private bool _showTF = false;
     private bool _showSA = false;
-
+    private Question? previousState;
+    string[] types = new string[] { "True/False", "Short Answer", "Long Answer" };
+    private string selectedType;
     protected override async Task OnInitializedAsync()
     {
         _question = await QuestionService.GetQuestionAsync(questionID);
+        previousState = (Question)_question.Clone();
+        selectedType = _question.type;
         showBlock(_question.type);
     }
 
@@ -71,14 +78,36 @@ else
 
         _showTF = false;
         _showSA = false;
-        if (type == "TF")
+        if (type == "True/False")
         {
             _showTF = true;
         }
-        else if (type == "ShortAnswer")
+        else if (type == "Short Answer")
         {
             _showSA = true;
         }
+        selectedType = type;
+
+
+
     }
+    
+    private async void Reset()
+    {
+        if (previousState != null)
+        {
+            _question = (Question)previousState.Clone();
+        }
+        showBlock(_question.type);
+        StateHasChanged();
+        Navigation.NavigateTo("/QuestionList");
+    }
+
+    private async void Save()
+    {
+        Navigation.NavigateTo("/QuestionList");
+    }
+    
+
 
 }

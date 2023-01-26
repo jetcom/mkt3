@@ -2,8 +2,8 @@
 <h3>QuestionList</h3>
 
 
-<table class="table">
-    <thead>
+<table class="table table-dark">
+    <thead >
     <tr>
         <AuthorizeView>
             <Authorized>
@@ -50,7 +50,7 @@
             <td>@question.type</td>
             <td>@question.Prompt</td>
     
-            <td>@question.Solution</td>
+            <td>@question.Solutions[0]</td>
             <td>@question.Points</td>
 
 

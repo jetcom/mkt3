@@ -8,13 +8,13 @@ public class QuestionService
 
         new Question
         {
-            QuestionID = "stddev", type = "ShortAnswer", Prompt = "What is the stdDev of 5 and 6",
-            Solution = "no idea", Points = 1
+            QuestionID = "stddev", type = "Short Answer", Prompt = "What is the stdDev of 5 and 6",
+            Solutions = new List<string> {"no idea"}, Points = 1
         },
-        new Question { QuestionID = "TFTest", type = "TF", Prompt = "This will work", Solution = "False", Points = 1 },
+        new Question { QuestionID = "TFTest", type = "True/False", Prompt = "This will work", Solutions = new List<string> {"False"}, Points = 1 },
         new Question
         {
-            QuestionID = "SATest2", type = "ShortAnswer", Prompt = "This will work", Solution = "Maybe", Points = 5
+            QuestionID = "SATest2", type = "Short Answer", Prompt = "Will this work?",  Solutions = new List<string> {"Maybe"}, Points = 5
         }
     };
 
@@ -35,14 +35,15 @@ public class QuestionService
 
 
  
-    public async Task<bool> SaveShortAnswerQuestion(Question question)
+    public async Task<bool> SaveQuestion(Question question)
     {
 
         try
         {
             
-            var oldQuestion = (from q in questionList where q.QuestionID == question.QuestionID select q).First<Question>();
-            oldQuestion = question;
+            // at this point it needs to be committed to the db, it's already updated the internal data
+            
+            
             //saq = question;
             /*   repeater.Date = DateTime.Now;
                var pushRepeaterDefinition = Builders<History>
@@ -69,17 +70,5 @@ public class QuestionService
         }
     }
 
-
-    public async Task<bool> SaveTFQuestion(Question question)
-    {
-
-        try
-        {
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
+    
 }

@@ -2,20 +2,29 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+    background-color: #23272b;
+    color: #b3b7bb;
 }
 
+.navbar {
+    background-color: #1b1e21;
+    border-bottom: 1px solid #b9bbbe;
+    color: #b3b7bb;
+}
 h1:focus {
     outline: none;
 }
 
 a, .btn-link {
-    color: #0071c1;
+    color: #e0a800;
 }
+
 
 .btn-primary {
     color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    background-color: #663C09;
+    border-color: #673D10;
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
