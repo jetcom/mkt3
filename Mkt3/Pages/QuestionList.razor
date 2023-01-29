@@ -2,17 +2,20 @@
 @using Mkt3.Data
 @using Mkt3.Components
 @inject QuestionService QuestionService;
+@inject ExamService ExamService;
+@inject NavigationManager Navigation
 Select Course: <select>
     <option value="csci320">CSCI.320</option>
     <option value="csci420">CSCI.420</option>
 </select>
-@if (questions == null)
+@if (exam == null || questions == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <QuestionListComponent questions=questions/>
+    <ExamInfoComponent exam=exam/>
+    <QuestionListComponent questions=questions onDeleteCallBack="OnDelete"/>
 
 }
 
@@ -20,14 +23,20 @@ else
     [Parameter]
     public string? questionBank { get; set; }
 
-    private Question[] questions;
+    private Question?[] questions;
+    private Exam exam;
 
     
     protected override async Task OnInitializedAsync()
     {
         questions = await QuestionService.GetQuestionsByBank("foo");
+        exam = await ExamService.getExam();
+
+    }
+
+    private async void OnDelete()
+    {
+        Navigation.NavigateTo("/questionList", true);
         
     }
- 
-
 }

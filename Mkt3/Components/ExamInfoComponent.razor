@@ -1,0 +1,81 @@
+@using Mkt3.Data
+@inject ExamService ExamService
+
+<div class="form-fields">
+        
+    <div class="form-field">
+        <div class="form-field-label form-field-label-wide" for="CourseName">Course Name: </div>
+        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.courseName"/></div>
+        <div class="form-field-label form-field-label-wide" for="CourseName">Course Number: </div>
+        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.courseNumber"/></div>
+        <div class="form-field-label form-field-label-wide" for="CourseName">Term: </div>
+        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.term"/></div>
+    </div>
+    <div class="form-field">
+        <div class="form-field-label form-field-label-wide" for="CourseName">Department: </div>
+        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.department"/></div>
+        <div class="form-field-label form-field-label-wide" for="CourseName">School: </div>
+        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.school"/></div>
+        <div class="form-field-label form-field-label-wide" for="CourseName">Instructor: </div>
+        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.instructor"/></div>
+    </div>
+    <div class="form-field">
+        <div class="form-field-label form-field-label-wide" for="CourseName">Notes: </div>
+        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.note"/></div>
+        <div class="form-field-label form-field-label-wide" for="CourseName">MaxPoints: </div>
+        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.maxPoints"/></div>
+        <div class="form-field-label form-field-label-wide" for="CourseName">Default Points: </div>
+        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.defaultPoints"/></div>
+    </div>
+        <div class="form-field">
+            <div class="form-field-label form-field-label-wide" for="CourseName">Soution Space: </div>
+            <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.defaultSolutionSpace"/></div>
+            <div class="form-field-label form-field-label-wide" for="CourseName">Line Length: </div>
+            <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.defaultLineLength"/></div>
+            <div class="form-field-label form-field-label-wide" for="CourseName">Exam ID: </div>
+            <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.examID"/></div>  
+        </div>
+</div>
+
+
+
+
+@code {
+    [Parameter] 
+    public Exam exam { get; set; }
+    
+    [Parameter]
+    public EventCallback onDeleteCallBack { get; set; }
+    
+    private string currentSort =  "RFreq";
+    private string currentOrder = "asc";
+    private string imageSortName = "images/sort-asc-white.png";
+    private string imageEditName = "images/edit-white.png";
+    
+    private Task sortAsync(string sortData)
+    {
+        
+        if (currentSort == sortData)
+        {
+            currentOrder = currentOrder == "asc" ? "desc" : "asc";
+            imageSortName = "images/sort-" + currentOrder + "-white.png";
+        }
+        currentSort = sortData;
+        
+        //questions = questions.AsQueryable().OrderBy(sortData + " "+ currentOrder).ToArray();
+        return Task.FromResult(true);
+    }
+
+    private void Add()
+    {
+       
+    }
+
+    private async Task Delete(string QuestionID)
+    {
+   //     var result = (QuestionService.Delete(QuestionID));
+        await onDeleteCallBack.InvokeAsync();
+
+    }
+
+}

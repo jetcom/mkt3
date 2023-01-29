@@ -3,7 +3,7 @@ namespace Mkt3.Data;
 public class QuestionService
 {
 
-    private List<Question> questionList = new()
+    private List<Question?> questionList = new()
     {
 
         new Question
@@ -18,28 +18,41 @@ public class QuestionService
         }
     };
 
-    public async Task<Question[]> GetQuestionsByBank(string bank)
+    public async Task<Question?[]> GetQuestionsByBank(string bank)
     {
         return questionList.ToArray();
-
-   
-
-
     }
 
 
-    public Task<Question> GetQuestionAsync(string QuestionID)
+    public Task<Question?> GetQuestionAsync(string QuestionID)
     {
         return Task.FromResult(questionList.First(q => q.QuestionID == QuestionID));
     }
 
 
  
-    public async Task<bool> SaveQuestion(Question question)
+    public async Task<bool> Update(Question? question)
     {
-
+        if (string.IsNullOrEmpty(question.QuestionID)) return false;
         try
         {
+            bool found = false;
+            for (var i=0; i< questionList.Count; i++)
+            {
+                if (questionList[i].QuestionID == question.QuestionID)
+                {
+                    questionList[i] = question;
+                    found = true;
+                }
+            } 
+            
+            if (!found)
+            {
+                questionList.Add(question);
+            }
+       
+
+
             
             // at this point it needs to be committed to the db, it's already updated the internal data
             
@@ -69,6 +82,18 @@ public class QuestionService
             return false;
         }
     }
+    public bool Delete(string QuestionID)
+    {
+        try
+        {
+            questionList.Remove(questionList.Find(q => q.QuestionID == QuestionID));
+        }
+        catch
+        {
+            return false;
+        }
 
+        return true;
+    }
     
 }

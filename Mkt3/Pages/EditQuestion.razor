@@ -4,8 +4,6 @@
 @using Mkt3.Data
 @using Mkt3.Components
 
-
-
 @inject QuestionService QuestionService;
 
 <PageTitle>Question Editor</PageTitle>
@@ -61,10 +59,19 @@ else
     private string selectedType;
     protected override async Task OnInitializedAsync()
     {
-        _question = await QuestionService.GetQuestionAsync(questionID);
-        previousState = (Question)_question.Clone();
-        selectedType = _question.type;
-        showBlock(_question.type);
+        if (questionID != null)
+        {
+            _question = await QuestionService.GetQuestionAsync(questionID);
+            previousState = (Question)_question.Clone();
+            selectedType = _question.type;
+
+        }
+        else
+        {
+            selectedType = "Short Answer";
+            _question = new Question();
+        }
+        showBlock(selectedType);
     }
 
     private void QuestionTypeChange(ChangeEventArgs obj)
@@ -98,9 +105,11 @@ else
         {
             _question = (Question)previousState.Clone();
         }
+        await QuestionService.Update(_question);
         showBlock(_question.type);
         StateHasChanged();
         Navigation.NavigateTo("/QuestionList");
+       
     }
 
     private async void Save()

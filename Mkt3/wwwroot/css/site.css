@@ -96,4 +96,61 @@ a, .btn-link {
     width: 105px;
     text-align: right;
     vertical-align: top;
+    padding-top: 7px;
+}
+
+.form-field-label-wide
+{
+    width: 175px;
+}
+
+.input-box-dark
+{
+    background-color: #2c3034;
+    border-color: #373b3e;
+    color: #e7f1ff;
+}
+
+.buttons {
+    background: #11c3ff linear-gradient(to bottom, transparent, #009bcf);
+    border: 1px solid white;
+
+    border-radius: 5px;
+    color: white;
+    display: inline-block;
+    font: bold 12px Arial, Helvetica, sans-serif;
+    padding: 10px 15px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.tag
+{
+    font-size: small;
+    padding: 0 5px;
+    color: white;
+    margin-left: 3px;
+    border-width: 0;
+    background-color: #157347;
+    border-radius: 99999px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.tag-remove
+{
+    font-size: small;
+    border-width: 0;
+    color: white;
+    padding: 0 5px;
+    margin-right: 3px;
+    background-color: #157347;
+    border-radius: 99999px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;  
+    border-left: 1px solid black;
+}
+
+.buttons-red {
+    background: #d27700 linear-gradient(to bottom, transparent, #aa3300);   
 }

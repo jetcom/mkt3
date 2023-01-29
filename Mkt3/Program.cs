@@ -23,6 +23,7 @@ builder.Services
     .AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<QuestionService>();
+builder.Services.AddSingleton<ExamService>();
 
 var app = builder.Build();
 

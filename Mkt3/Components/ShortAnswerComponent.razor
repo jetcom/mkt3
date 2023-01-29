@@ -13,27 +13,37 @@ else
     <EditForm Model="@question" OnValidSubmit="@HandleValidSubmit">
         <div class="form-fields">
         
-        <div class="form-field">
-            <div class="form-field-label" for="lastNameInput">Prompt: </div>
-            <div class="form-field-control"><textarea rows="4" cols="50" @bind="@question.Prompt"/></div>
+            <div class="form-field">
+                    <div class="form-field-label" for="lastNameInput">QuestionID: </div>
+                <div class="form-field-control"><input cols="50" @bind="@question.QuestionID"/></div>
+                </div>
+            <div class="form-field">
+                <div class="form-field-label" for="lastNameInput">Prompt: </div>
+                <div class="form-field-control"><textarea rows="4" cols="50" @bind="@question.Prompt"/></div>
+            </div>
+            <div class="form-field">
+                <div class="form-field-label" for="lastNameInput">Solution: </div>
+                <div class="form-field-control"><input size="50" @bind="@question.Solutions[0]"/></div>
+            </div>
+            <div class="form-field">
+                <div class="form-field-label" for="lastNameInput">Points: </div>
+                <div class="form-field-control"><input @bind="@question.Points"/></div>
+            </div>
+            <div class="form-field">
+                <div class="form-field-label" for="lastNameInput"> </div>
+                <div class="form-field-control">
+                    <button type="submit" class="buttons">Save</button>
+                    <button type="button" class="buttons" @onclick="@(async () => ResetForm())">Cancel</button>
+                </div>
+            </div>
         </div>
-        <div class="form-field">
-            <div class="form-field-label" for="lastNameInput">Solution: </div>
-            <div class="form-field-control"><input size="50" @bind="@question.Solutions[0]"/></div>
-        </div>
-        <div class="form-field">
-            <div class="form-field-label" for="lastNameInput">Points: </div>
-            <div class="form-field-control"><input @bind="@question.Points"/></div>
-        </div>
-
-         <button type="submit">Save</button><button type="submit" @onclick="@(async () => ResetForm())">Cancel</button>
-         </div>
     </EditForm>
+
 }
 
 @code {
     [Parameter]
-    public Question question { get; set; }
+    public Question? question { get; set; }
     
     [Parameter]
     public EventCallback onResetClick { get; set; }
@@ -42,7 +52,6 @@ else
     [Parameter]
     public string belongsTo { get; set; }
     
-    private bool reset = false;
 
 
     protected override async Task OnInitializedAsync()
@@ -54,20 +63,17 @@ else
     
     private async Task HandleValidSubmit()
     {
-        if (!reset)
+
+        question.type = "Short Answer";
+        if (await QuestionService.Update(question))
         {
-            question.type = "Short Answer";
-            if (await QuestionService.SaveQuestion(question))
-            {
-    // NavManager.NavigateTo(_pageState.GetGoBackPage());
-                await onSaveClick.InvokeAsync();
-            }
+            await onSaveClick.InvokeAsync();
         }
-        reset = false;
+
     }
     private async void ResetForm()
     {
-        reset = true;
+
         await onResetClick.InvokeAsync();
         
     }

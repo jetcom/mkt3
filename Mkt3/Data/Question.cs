@@ -3,7 +3,7 @@ namespace Mkt3.Data;
 public class Question: ICloneable
 {
     public string type { get; set; }
-    public string Owner { get; set; }
+
     public string QuestionID { get; set; }
     public string Prompt { get; set; }
     public int Points { get; set; }
@@ -11,7 +11,19 @@ public class Question: ICloneable
 
     public List<string> WrongAnswers { get; set; }
     
-    
+    public List<string> ExamTags { get; set; } 
+
+
+    public Question()
+    {
+        Solutions = new List<string>();
+        Solutions.Add("");
+        WrongAnswers = new List<string>();
+        WrongAnswers.Add("");
+        ExamTags = new List<string>();
+        ExamTags.Add("CSCI.320 Week 1");
+        ExamTags.Add("CSCI.320 Final");
+    }
     public object Clone()
     {
         var newItem =  (Question)MemberwiseClone();
@@ -27,6 +39,15 @@ public class Question: ICloneable
             foreach (var wrong in this.WrongAnswers)
             {
                 newItem.WrongAnswers.Add(wrong);
+            }
+        }
+        
+        if (this.ExamTags != null)
+        {
+            newItem.ExamTags = new List<string>();
+            foreach (var tag in this.ExamTags)
+            {
+                newItem.ExamTags.Add(tag);
             }
         }
 

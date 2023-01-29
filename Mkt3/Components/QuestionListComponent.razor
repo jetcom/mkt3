@@ -1,4 +1,5 @@
 @using Mkt3.Data
+@inject QuestionService QuestionService
 <h3>QuestionList</h3>
 
 
@@ -33,7 +34,8 @@
                 <img width="12" src="@imageSortName"/>
                 Points
             </span> </th>
-   
+        <th style="width:25px">
+                </th>
 
     </tr>
     </thead>
@@ -41,26 +43,38 @@
     @foreach (var question in questions)
     {
         <tr>
-             <AuthorizeView>
-             <Authorized>
+            <AuthorizeView>
+                <Authorized>
                     <td><a href="/editRepeater/@question.QuestionID"> <img width="12" src="@imageEditName"/></a></td>
-             </Authorized>
-             </AuthorizeView>
-                        <td><a href="/editQuestion/@question.QuestionID">@question.QuestionID</a></td>
+                </Authorized>
+            </AuthorizeView>
+            <td><a href="/editQuestion/@question.QuestionID">@question.QuestionID</a></td>
             <td>@question.type</td>
-            <td>@question.Prompt</td>
+            <td>@question.Prompt
+                @foreach (var tag in question.ExamTags)
+                                 {
+                                     <button class="tag">@tag</button><button class="tag-remove">X</button>
+                                 }
+                </td>
     
             <td>@question.Solutions[0]</td>
             <td>@question.Points</td>
+       
+            <td><button type="button" class="buttons buttons-red" @onclick="@(async () => await Delete(@question.QuestionID))">Delete</button>   </td>
 
 
         </tr>
     }
     </tbody>
 </table>
+
+<a href="/editQuestion/" class="buttons">Add</a>    
 @code {
     [Parameter] 
     public Question[] questions { get; set; }
+    
+    [Parameter]
+    public EventCallback onDeleteCallBack { get; set; }
     
     private string currentSort =  "RFreq";
     private string currentOrder = "asc";
@@ -80,4 +94,17 @@
         //questions = questions.AsQueryable().OrderBy(sortData + " "+ currentOrder).ToArray();
         return Task.FromResult(true);
     }
+
+    private void Add()
+    {
+       
+    }
+
+    private async Task Delete(string QuestionID)
+    {
+        var result = (QuestionService.Delete(QuestionID));
+        await onDeleteCallBack.InvokeAsync();
+
+    }
+
 }
