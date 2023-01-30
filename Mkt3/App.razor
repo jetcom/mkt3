@@ -1,14 +1,43 @@
 ﻿<CascadingAuthenticationState>
-    <Router AppAssembly="@typeof(App).Assembly">
-        <Found Context="routeData">
-            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
-            <FocusOnNavigate RouteData="@routeData" Selector="h1"/>
-        </Found>
-        <NotFound>
-            <PageTitle>Not found</PageTitle>
-            <LayoutView Layout="@typeof(MainLayout)">
-                <p role="alert">Sorry, there's nothing at this address.</p>
-            </LayoutView>
-        </NotFound>
-    </Router>
+    <Blazorise.ThemeProvider Theme="@theme">
+        <Router AppAssembly="@typeof(App).Assembly">
+            <Found Context="routeData">
+                <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
+                <FocusOnNavigate RouteData="@routeData" Selector="h1"/>
+            </Found>
+            <NotFound>
+                <PageTitle>Not found</PageTitle>
+                <LayoutView Layout="@typeof(MainLayout)">
+                    <p role="alert">Sorry, there's nothing at this address.</p>
+                </LayoutView>
+            </NotFound>
+        </Router>
+    </Blazorise.ThemeProvider>
 </CascadingAuthenticationState>
+
+@code{
+    
+    private Theme theme = new Theme
+    {
+
+        IsGradient = true,
+        IsRounded = true,
+        ColorOptions = new ThemeColorOptions
+        {
+            Link = "#ff9900",
+        },
+        TextColorOptions = new ThemeTextColorOptions
+        {
+            Body = "#23272b",
+        },
+        BodyOptions = new ThemeBodyOptions
+        {
+            TextColor = "#FFFFFF",
+            BackgroundColor = "#23272b",
+        }
+ 
+
+
+    // theme settings
+    };
+}

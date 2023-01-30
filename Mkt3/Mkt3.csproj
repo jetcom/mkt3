@@ -13,6 +13,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Blazorise" Version="1.1.6" />
+        <PackageReference Include="Blazorise.Bootstrap" Version="1.1.6" />
+        <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.1.6" />
+        <PackageReference Include="Blazorise.TreeView" Version="1.1.6" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.2" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.2" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.2" />

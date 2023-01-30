@@ -8,14 +8,14 @@ Select Course: <select>
     <option value="csci320">CSCI.320</option>
     <option value="csci420">CSCI.420</option>
 </select>
-@if (exam == null || questions == null)
+@if (exam == null || questionBank == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
     <ExamInfoComponent exam=exam/>
-    <QuestionListComponent questions=questions onDeleteCallBack="OnDelete"/>
+    <QuestionListComponent questionBank=questionBank onDeleteCallBack="OnDelete"/>
 
 }
 
@@ -23,20 +23,21 @@ else
     [Parameter]
     public string? questionBank { get; set; }
 
-    private Question?[] questions;
+    //private Question?[] questions;
     private Exam exam;
 
     
     protected override async Task OnInitializedAsync()
     {
-        questions = await QuestionService.GetQuestionsByBank("foo");
+        questionBank = "foo";
         exam = await ExamService.getExam();
 
     }
 
     private async void OnDelete()
     {
-        Navigation.NavigateTo("/questionList", true);
+        StateHasChanged();
+       // Navigation.NavigateTo("/questionList", true);
         
     }
 }

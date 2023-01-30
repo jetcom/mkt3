@@ -76,3 +76,7 @@
 /Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/obj/Debug/net7.0/Mkt3.pdb
 /Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/obj/Debug/net7.0/Mkt3.genruntimeconfig.cache
 /Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/obj/Debug/net7.0/ref/Mkt3.dll
+/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Blazorise.dll
+/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Blazorise.TreeView.dll
+/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Blazorise.Bootstrap.dll
+/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Blazorise.Icons.FontAwesome.dll

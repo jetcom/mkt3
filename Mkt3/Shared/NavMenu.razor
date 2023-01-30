@@ -1,4 +1,6 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject NavigationManager Navigation
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Mkt3</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -22,6 +24,28 @@
     </nav>
 </div>
 
+
+<div style="padding-left: 10px; padding-top: 5px; padding-bottom: 2px; background: #1e2125; width: 100%">
+    <img src="images/new.png" width="24px"/>
+    <img src="images/folder.png" width="24px"/>
+    <img src="images/upload.png" width="24px"/>
+    <span style="padding-left: 95px">
+     <img src="images/rename.png" width="24px"/>
+     <img src="images/delete.png" width="24px"/>       
+    </span>
+</div>
+<TreeView Nodes="Items"
+          GetChildNodes="@(item => item.Children)"
+          HasChildNodes="@(item => item.Children?.Any() == true)"
+          TNode="Item"
+          SelectedNode="SelectedNode"
+          SelectedNodeChanged="onSelectedNodeChanged">
+      
+    <NodeContent>@context.Text</NodeContent>
+</TreeView>
+
+<a href="/">New Course</a>
+
 @code {
     private bool collapseNavMenu = true;
 
@@ -31,5 +55,39 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
+    public class Item
+    {
+        public string Text { get; set; }
+        public IEnumerable<Item> Children { get; set; }
+      
+    }
+
+    IEnumerable<Item> Items = new[]
+    {
+
+        new Item {
+            Text = "CSCI.320",
+            Children = new []
+            {
+                new Item { Text = "Quiz 1" },
+                new Item { Text = "Quiz 2" },
+                new Item { Text = "Quiz 3" },
+                new Item { Text = "Final Exam" }
+            }
+        },
+        new Item { Text = "CSCI.420" },
+    };
+
+    IList<Item> ExpandedNodes = new List<Item>();
+    Item SelectedNode;
+
+
+    private void onSelectedNodeChanged(Item item)
+    {
+        Navigation.NavigateTo("questionList");
+    }
+
+
+  
 
 }

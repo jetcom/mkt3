@@ -5,12 +5,20 @@
       "PackagePath": "staticwebassets/Mkt3.bundle.scp.css"
     },
     {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/.DS_Store",
+      "PackagePath": "staticwebassets/.DS_Store"
+    },
+    {
       "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/css/bootstrap/bootstrap.min.css",
       "PackagePath": "staticwebassets/css/bootstrap/bootstrap.min.css"
     },
     {
       "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/css/bootstrap/bootstrap.min.css.map",
       "PackagePath": "staticwebassets/css/bootstrap/bootstrap.min.css.map"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/css/custom.styles.css",
+      "PackagePath": "staticwebassets/css/custom.styles.css"
     },
     {
       "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/css/open-iconic/FONT-LICENSE",
@@ -57,6 +65,22 @@
       "PackagePath": "staticwebassets/favicon.png"
     },
     {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/delete.png",
+      "PackagePath": "staticwebassets/images/delete.png"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/folder.png",
+      "PackagePath": "staticwebassets/images/folder.png"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/new.png",
+      "PackagePath": "staticwebassets/images/new.png"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/rename.png",
+      "PackagePath": "staticwebassets/images/rename.png"
+    },
+    {
       "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/sort-asc-white.png",
       "PackagePath": "staticwebassets/images/sort-asc-white.png"
     },
@@ -71,6 +95,10 @@
     {
       "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/sort-desc.png",
       "PackagePath": "staticwebassets/images/sort-desc.png"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/upload.png",
+      "PackagePath": "staticwebassets/images/upload.png"
     },
     {
       "Id": "obj/Debug/net7.0/staticwebassets/msbuild.Mkt3.Microsoft.AspNetCore.StaticWebAssets.props",
