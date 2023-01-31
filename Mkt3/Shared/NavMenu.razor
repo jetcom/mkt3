@@ -1,4 +1,6 @@
-﻿@inject NavigationManager Navigation
+﻿@using Mkt3.Data
+@inject NavigationManager Navigation
+@inject ExamService ExamService
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -65,7 +67,8 @@
       
     }
 
-    IEnumerable<Item> Items = new[]
+    List<Item> Items = new();
+    /*IEnumerable<Item> Items = new[]
     {
 
         new Item {
@@ -80,12 +83,24 @@
             }
         },
         new Item { Parent = "", Text = "CSCI.420" },
-    };
+    };*/
 
     IList<Item> ExpandedNodes = new List<Item>();
     Item SelectedNode;
 
+    protected override async Task OnInitializedAsync()
+    {
+        var allExams = await ExamService.getAllExams();
 
+
+        foreach (var course in  allExams.DistinctBy(e => e.courseNumber))
+        {
+            var children = allExams.FindAll(e => e.courseNumber == course.courseNumber).OrderBy(e=>e.examID).Select(exam => new Item() { Parent = course.courseNumber, Text = exam.examID }).ToList();
+
+            Items.Add(new Item() { Text = course.courseNumber, Children = children});
+        }
+    }
+    
     private void onSelectedNodeChanged(Item item)
     {
         if (item != null)
