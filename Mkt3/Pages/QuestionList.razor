@@ -1,4 +1,6 @@
 @page "/QuestionList"
+@page "/QuestionList/{CourseID}"
+@page "/QuestionList/{CourseID}/{ExamID}"
 @using Mkt3.Data
 @using Mkt3.Components
 @inject QuestionService QuestionService;
@@ -8,36 +10,34 @@ Select Course: <select>
     <option value="csci320">CSCI.320</option>
     <option value="csci420">CSCI.420</option>
 </select>
-@if (exam == null || questionBank == null)
+@if (ExamID == null || questionBank == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <ExamInfoComponent exam=exam/>
+    <ExamInfoComponent courseID="@CourseID" examID="@ExamID"/>
     <QuestionListComponent questionBank=questionBank onDeleteCallBack="OnDelete"/>
 
 }
 
 @code {
+
+    private string? questionBank { get; set; }
+
     [Parameter]
-    public string? questionBank { get; set; }
+    public string CourseID { get; set; }
+    [Parameter]
+    public string ExamID { get; set; }
 
-    //private Question?[] questions;
-    private Exam exam;
-
-    
     protected override async Task OnInitializedAsync()
     {
-        questionBank = "foo";
-        exam = await ExamService.getExam();
-
+        questionBank = "Unk";
     }
 
     private async void OnDelete()
     {
         StateHasChanged();
        // Navigation.NavigateTo("/questionList", true);
-        
     }
 }

@@ -1,56 +1,85 @@
 @using Mkt3.Data
+@using Microsoft.EntityFrameworkCore
 @inject ExamService ExamService
 
-<div class="form-fields">
-        
-    <div class="form-field">
-        <div class="form-field-label form-field-label-wide" for="CourseName">Course Name: </div>
-        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.courseName"/></div>
-        <div class="form-field-label form-field-label-wide" for="CourseName">Course Number: </div>
-        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.courseNumber"/></div>
-        <div class="form-field-label form-field-label-wide" for="CourseName">Term: </div>
-        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.term"/></div>
-    </div>
-    <div class="form-field">
-        <div class="form-field-label form-field-label-wide" for="CourseName">Department: </div>
-        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.department"/></div>
-        <div class="form-field-label form-field-label-wide" for="CourseName">School: </div>
-        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.school"/></div>
-        <div class="form-field-label form-field-label-wide" for="CourseName">Instructor: </div>
-        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.instructor"/></div>
-    </div>
-    <div class="form-field">
-        <div class="form-field-label form-field-label-wide" for="CourseName">Notes: </div>
-        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.note"/></div>
-        <div class="form-field-label form-field-label-wide" for="CourseName">MaxPoints: </div>
-        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.maxPoints"/></div>
-        <div class="form-field-label form-field-label-wide" for="CourseName">Default Points: </div>
-        <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.defaultPoints"/></div>
-    </div>
+@if (exam != null)
+{
+    <div class="form-fields">
+
+        <div class="form-field">
+            <div class="form-field-label form-field-label-wide" for="CourseName">Course Name: </div>
+            <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.courseName"/></div>
+            <div class="form-field-label form-field-label-wide" for="CourseName">Course Number: </div>
+            <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.courseNumber"/></div>
+            <div class="form-field-label form-field-label-wide" for="CourseName">Term: </div>
+            <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.term"/></div>
+        </div>
+        <div class="form-field">
+            <div class="form-field-label form-field-label-wide" for="CourseName">Department: </div>
+            <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.department"/></div>
+            <div class="form-field-label form-field-label-wide" for="CourseName">School: </div>
+            <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.school"/></div>
+            <div class="form-field-label form-field-label-wide" for="CourseName">Instructor: </div>
+            <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.instructor"/></div>
+        </div>
+        <div class="form-field">
+            <div class="form-field-label form-field-label-wide" for="CourseName">Notes: </div>
+            <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.note"/></div>
+            <div class="form-field-label form-field-label-wide" for="CourseName">MaxPoints: </div>
+            <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.maxPoints"/></div>
+            <div class="form-field-label form-field-label-wide" for="CourseName">Default Points: </div>
+            <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.defaultPoints"/></div>
+        </div>
         <div class="form-field">
             <div class="form-field-label form-field-label-wide" for="CourseName">Soution Space: </div>
             <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.defaultSolutionSpace"/></div>
             <div class="form-field-label form-field-label-wide" for="CourseName">Line Length: </div>
             <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.defaultLineLength"/></div>
             <div class="form-field-label form-field-label-wide" for="CourseName">Exam ID: </div>
-            <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.examID"/></div>  
+            <div class="form-field-control"><input class="input-box-dark" cols="50" @bind="@exam.examID"/></div>
         </div>
-</div>
+    </div>
 
-
+}
 
 
 @code {
     [Parameter] 
-    public Exam exam { get; set; }
+    public String courseID { get; set; }
+    
+    [Parameter] 
+    public String examID { get; set; }
     
     [Parameter]
     public EventCallback onDeleteCallBack { get; set; }
-    
+
+
+    private Exam? exam { get; set; }
     private string currentSort =  "RFreq";
     private string currentOrder = "asc";
     private string imageSortName = "images/sort-asc-white.png";
     private string imageEditName = "images/edit-white.png";
+    
+    
+    protected override async Task OnInitializedAsync()
+    {
+        exam = await ExamService.getExam(courseID, examID);
+        StateHasChanged();
+        if (exam == null)
+        {
+            
+        }
+    }
+    
+    
+    
+    //THIS WILL UPDATE MODEL IF PARENT CHANGES
+    protected override async Task OnParametersSetAsync()
+    {
+        exam = await ExamService.getExam(courseID, examID);
+        StateHasChanged();
+        await base.OnParametersSetAsync();
+    }
     
     private Task sortAsync(string sortData)
     {

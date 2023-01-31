@@ -1,3 +1,11 @@
 a, .btn-link {
     color: #e0a800;
 }
+
+.navHeader {
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 2px;
+    background: #1e2125;
+    width: 100%;
+}

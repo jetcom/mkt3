@@ -1,25 +1,30 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+
 namespace Mkt3.Data;
 
 public class ExamService
 {
+   private bool Loading;
 
-   public async Task<Exam> getExam()
+   
+   public async Task<Exam?> getExam(string courseID, string examID)
    {
-      return new Exam()
-      {
-         courseName = "Test Course",
-         courseNumber = "CSCI.001",
-         examName = "Test Exam",
-         maxPoints = 100,
-         term = "Spring 2023",
-         useCheckboxes = true,
-         defaultPoints = 1,
-         defaultSolutionSpace = "2.5in",
-         defaultLineLength = "3in",
-         department = "Test Department",
-         school = "Made up school of technology"
-      };
-   }
 
- 
-}
+      await using var ctx = new Mkt3Context();
+
+      try
+      {
+         var exam = ctx.Exams
+            .Single(e => e.examID == examID && e.courseNumber == courseID);
+         return exam;
+      }
+      catch
+      {
+         return null;
+      }
+      
+      
+   }
+   
+ }

@@ -1,7 +1,13 @@
+using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+
 namespace Mkt3.Data;
+
 
 public class Exam: ICloneable
 {
+
     public string courseName { get; set; }
 
     public string courseNumber { get; set; }
@@ -17,6 +23,7 @@ public class Exam: ICloneable
     public string? department { get; set; }
     public string? school { get; set; }
     
+
     public string examID { get; set; }
 
 
@@ -33,6 +40,7 @@ public class Exam: ICloneable
         return newItem;
 
     }
+
 
 }
 
