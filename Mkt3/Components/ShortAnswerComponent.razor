@@ -15,7 +15,7 @@ else
         
             <div class="form-field">
                     <div class="form-field-label" for="lastNameInput">QuestionID: </div>
-                <div class="form-field-control"><input cols="50" @bind="@question.QuestionID"/></div>
+                <div class="form-field-control"><input cols="50" @bind="@question.QuestionLabel"/></div>
                 </div>
             <div class="form-field">
                 <div class="form-field-label" for="lastNameInput">Prompt: </div>
@@ -50,7 +50,7 @@ else
     [Parameter]
     public EventCallback onSaveClick { get; set; }
     [Parameter]
-    public string belongsTo { get; set; }
+    public string TopicID { get; set; }
     
 
 
@@ -65,7 +65,7 @@ else
     {
 
         question.type = "Short Answer";
-        if (await QuestionService.Update(question))
+        if (await QuestionService.Update(question, Convert.ToInt32(TopicID)))
         {
             await onSaveClick.InvokeAsync();
         }

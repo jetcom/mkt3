@@ -78,8 +78,11 @@ namespace Mkt3.Migrations
 
             modelBuilder.Entity("Mkt3.Data.Question", b =>
                 {
-                    b.Property<string>("QuestionID")
-                        .HasColumnType("text");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
                     b.Property<List<string>>("ExamTags")
                         .IsRequired()
@@ -89,6 +92,10 @@ namespace Mkt3.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Prompt")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("QuestionLabel")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -104,9 +111,43 @@ namespace Mkt3.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("QuestionID");
+                    b.HasKey("ID");
 
                     b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("Mkt3.Data.QuestionTopic", b =>
+                {
+                    b.Property<int>("QuestionID")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TopicID")
+                        .HasColumnType("integer");
+
+                    b.HasKey("QuestionID", "TopicID");
+
+                    b.ToTable("QuestionTopics");
+                });
+
+            modelBuilder.Entity("Mkt3.Data.Topic", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Course")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Topics");
                 });
 #pragma warning restore 612, 618
         }

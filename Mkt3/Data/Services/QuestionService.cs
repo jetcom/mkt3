@@ -1,80 +1,94 @@
+using System.ComponentModel;
+using Humanizer;
+using Microsoft.EntityFrameworkCore;
+
 namespace Mkt3.Data;
 
 public class QuestionService
 {
 
-    private List<Question?> questionList = new()
-    {
 
-        new Question
+
+    public async Task<List<Question>> GetQuestionsByTopic(string course, int topicID)
+    {
+        await using var ctx = new Mkt3Context();
+
+        //var topicID = ctx.Topics.Where(t => t.Course == course && t.Name == topic).Select(t => t.ID).ToList();
+
+        var questionID = ctx.QuestionTopics.Where(qt => topicID == (qt.TopicID)).Select(q=>q.QuestionID).ToList();
+        var questions = ctx.Questions.Where(q => questionID.Contains(q.ID)).ToList();
+
+        foreach(var q in questions)
         {
-            QuestionID = "stddev", type = "Short Answer", Prompt = "What is the stdDev of 5 and 6",
-            Solutions = new List<string> {"no idea"}, Points = 1
-        },
-        new Question { QuestionID = "TFTest", type = "True/False", Prompt = "This will work", Solutions = new List<string> {"False"}, Points = 1 },
-        new Question
-        {
-            QuestionID = "SATest2", type = "Short Answer", Prompt = "Will this work?",  Solutions = new List<string> {"Maybe"}, Points = 5
+            var tagIDs = ctx.QuestionTopics.Where(qt => qt.QuestionID == q.ID).Select(q=>q.TopicID).ToList();
+            foreach (var tag in ctx.Topics.Where(t => tagIDs.Contains(t.ID)).ToList())
+            {
+           
+                q.ExamTags.Add(tag.Course + " "+tag.Name);
+                
+            }
         }
-    };
+        
 
-    public async Task<Question?[]> GetQuestionsByBank(string bank)
-    {
-        return questionList.ToArray();
+       /* var query= from article in db.Articles
+            where article.Categories.Any(c=>c.Category_ID==cat_id)
+            select article;*/
+        //var query= ctx.QuestionTopics.Where(qt=>qt.TopicID=topic).SelectMany(c=>);
+        
+        
+      /*  var tid = ctx.QuestionTopics.First(top => top.Course == course && top.Name == topic);
+        // var tags = context.Posts.Where(post => post.Tags.All(tag => tagIds.Contains(tag)));
+        var questions = ctx.Questions.Where(q => )
+            // return exams;*/
+        return questions;
     }
 
 
-    public Task<Question?> GetQuestionAsync(string QuestionID)
+    public async Task<Question?> GetQuestionAsync(string QuestionID)
     {
-        return Task.FromResult(questionList.First(q => q.QuestionID == QuestionID));
+        await using var ctx = new Mkt3Context();
+        return ctx.Questions.First(q => q.QuestionLabel == QuestionID);
+    }
+
+    public async Task<Topic> GetTopicsByID(int topicID)
+    {
+        await using var ctx = new Mkt3Context();
+        var topic = ctx.Topics.First(t => t.ID == topicID);
+        return topic;
+    }
+    
+    public async Task<List<Topic>> GetTopics()
+    {
+        await using var ctx = new Mkt3Context();
+        var topics = ctx.Topics.OrderBy(e=>e.Course).ToList();
+        return topics;
     }
 
 
  
-    public async Task<bool> Update(Question? question)
+    public async Task<bool> Update(Question? question, int topicID)
     {
-        if (string.IsNullOrEmpty(question.QuestionID)) return false;
+        await using var ctx = new Mkt3Context();
+        
+        if (string.IsNullOrEmpty(question.QuestionLabel)) return false;
         try
         {
-            bool found = false;
-            for (var i=0; i< questionList.Count; i++)
-            {
-                if (questionList[i].QuestionID == question.QuestionID)
-                {
-                    questionList[i] = question;
-                    found = true;
-                }
-            } 
             
-            if (!found)
+          
+            if (question.ID != 0)
             {
-                questionList.Add(question);
+                ctx.Questions.Update(question);
             }
-       
 
+            else
+            {
+                ctx.Questions.Add(question);
+                
+            }
 
-            
-            // at this point it needs to be committed to the db, it's already updated the internal data
-            
-            
-            //saq = question;
-            /*   repeater.Date = DateTime.Now;
-               var pushRepeaterDefinition = Builders<History>
-                   .Update.Push(h => h.RepeaterHistory, previousState);
-               var updateOptions = new UpdateOptions { IsUpsert = true};
-               await repeaterHistory.UpdateOneAsync(h => h._id == previousState._id, pushRepeaterDefinition, updateOptions); 
-                       
-   
-               if (repeater._id != null)
-               {
-                   await collection.ReplaceOneAsync(r => r._id == repeater._id, repeater);
-               }
-               else
-               {
-                   await collection.InsertOneAsync(repeater);
-   
-               }
-               return true;*/
+            var i = await ctx.SaveChangesAsync();
+            ctx.QuestionTopics.Add(new QuestionTopic {QuestionID = question.ID, TopicID = topicID});
+            i = await ctx.SaveChangesAsync();
             return true;
         }
         catch
@@ -82,11 +96,13 @@ public class QuestionService
             return false;
         }
     }
-    public bool Delete(string QuestionID)
+    public async Task<bool> Delete(Question question)
     {
         try
         {
-            questionList.Remove(questionList.Find(q => q.QuestionID == QuestionID));
+            await using var ctx = new Mkt3Context();
+            ctx.Questions.Remove(question);
+            await ctx.SaveChangesAsync();
         }
         catch
         {

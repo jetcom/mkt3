@@ -80,3 +80,5 @@
 /Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Blazorise.TreeView.dll
 /Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Blazorise.Bootstrap.dll
 /Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Blazorise.Icons.FontAwesome.dll
+/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Npgsql.dll
+/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll

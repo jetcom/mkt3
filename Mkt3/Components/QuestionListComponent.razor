@@ -3,7 +3,7 @@
 @inject QuestionService QuestionService
 @inject IJSRuntime JSRuntime
 
-<h3>QuestionList</h3>
+<h3>@topic.Name</h3>
 
 
 <table class="table table-dark table-striped">
@@ -34,11 +34,11 @@
         <TableRow>
             <AuthorizeView>
                 <Authorized>
-                   <!-- <td><a href="/editRepeater/@question.QuestionID"> <img width="12" src="@imageEditName"/></a></td>-->
+                   <!-- <td><a href="/editRepeater/@question.QuestionLabel"> <img width="12" src="@imageEditName"/></a></td>-->
                 </Authorized>
             </AuthorizeView>
        
-            <TableRowCell><a href="/editQuestion/@question.QuestionID">@question.Prompt</a>
+            <TableRowCell><a href="/editQuestion/@question.QuestionLabel">@question.Prompt</a>
                 @foreach (var tag in question.ExamTags)
                                  {
                                      <button class="tag">@tag</button><button class="tag-remove">X</button>
@@ -47,7 +47,7 @@
             <TableRowCell>@question.type</TableRowCell>
      
        
-            <TableRowCell><button type="button" class="buttons buttons-red" @onclick="@(async () => await Delete(question.QuestionID))">Delete</button>   </TableRowCell>
+            <TableRowCell><button type="button" class="buttons buttons-red" @onclick="@(async () => await Delete(question))">Delete</button>   </TableRowCell>
 
 
         </TableRow>
@@ -55,29 +55,41 @@
     </TableBody>
 </table>
 
-<a href="/editQuestion/" class="buttons">Add</a>    
+<a href="/editQuestion/@TopicID" class="buttons">Add</a>    
 @code {
 
     [Parameter] 
-    public string questionBank { get; set; }
+    public string TopicID { get; set; }
+    
+    [Parameter] 
+    public string CourseID { get; set; }
     
     [Parameter]
     public EventCallback onDeleteCallBack { get; set; }
     
-    private Question[] questions { get; set; }
+    private List<Question> questions { get; set; }
     private string currentSort =  "RFreq";
     private string currentOrder = "asc";
     private string imageSortName = "images/sort-asc-white.png";
     private string imageEditName = "images/edit-white.png";
+    private Topic topic;
 
     protected override async Task OnInitializedAsync()
+    {
+        
+        Refresh();
+    }
+
+    //THIS WILL UPDATE MODEL IF PARENT CHANGES
+    protected override async Task OnParametersSetAsync()
     {
         Refresh();
     }
 
     private async void Refresh()
     {
-        questions = await QuestionService.GetQuestionsByBank(questionBank);
+        topic = await QuestionService.GetTopicsByID(Convert.ToInt32(TopicID));
+        questions = await QuestionService.GetQuestionsByTopic(CourseID, Convert.ToInt32(TopicID));
     }
 
     private Task sortAsync(string sortData)
@@ -98,13 +110,14 @@
     {
        
     }
-
-    private async Task Delete(string QuestionID)
+    
+   
+    private async Task Delete(Question question)
     {
 
 
-        if (!await JSRuntime.InvokeAsync<bool>("confirm","Are you sure you want to delete: " + QuestionID + "?")) return;
-        var result = (QuestionService.Delete(QuestionID));
+        if (!await JSRuntime.InvokeAsync<bool>("confirm","Are you sure you want to delete: " + question.QuestionLabel + "?")) return;
+        var result = (QuestionService.Delete(question));
         StateHasChanged();
         Refresh();
 

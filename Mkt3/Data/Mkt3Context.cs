@@ -6,6 +6,8 @@ namespace Mkt3.Data;
 public class Mkt3Context: DbContext
 {
     public DbSet<Exam> Exams { get; set; }
+    public DbSet<QuestionTopic> QuestionTopics { get; set; }
+    public DbSet<Topic> Topics { get; set; }
     public DbSet<Question> Questions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -13,8 +15,11 @@ public class Mkt3Context: DbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+    
         modelBuilder.Entity<Exam>()
             .HasKey(nameof(Exam.examID), nameof(Exam.courseNumber));
+        modelBuilder.Entity<QuestionTopic>()
+            .HasKey(nameof(QuestionTopic.QuestionID), nameof(QuestionTopic.TopicID));
     }
   
 }

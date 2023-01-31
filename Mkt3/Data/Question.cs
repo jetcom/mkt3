@@ -1,10 +1,15 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Mkt3.Data;
 
 public class Question: ICloneable
 {
     public string type { get; set; }
 
-    public string QuestionID { get; set; }
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int ID { get; set; }
+    public string QuestionLabel { get; set; }
     public string Prompt { get; set; }
     public int Points { get; set; }
     public List<string> Solutions { get; set; }
@@ -21,8 +26,6 @@ public class Question: ICloneable
         WrongAnswers = new List<string>();
         WrongAnswers.Add("");
         ExamTags = new List<string>();
-        ExamTags.Add("CSCI.320 Week 1");
-        ExamTags.Add("CSCI.320 Final");
     }
     public object Clone()
     {

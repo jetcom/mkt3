@@ -1,5 +1,5 @@
-@page "/editQuestion/{questionID}"
-@page "/editQuestion"
+@page "/editQuestion/{questionID}/{TopicID}"
+@page "/editQuestion/{TopicID}"
 @inject NavigationManager Navigation
 @using Mkt3.Data
 @using Mkt3.Components
@@ -36,11 +36,11 @@ else
 
     @if (_showTF)
     {
-        <TrueFalseComponent question=_question onResetClick="Reset" onSaveClick="Save"/>
+        <TrueFalseComponent question=_question TopicID="@TopicID" onResetClick="Reset" onSaveClick="Save"/>
     }
     @if (_showSA)
     {
-        <ShortAnswerComponent question=_question onResetClick="Reset" onSaveClick="Save"/>
+        <ShortAnswerComponent question=_question TopicID="@TopicID" onResetClick="Reset" onSaveClick="Save"/>
     }
     
 }
@@ -48,6 +48,9 @@ else
 
     [Parameter]
     public string questionID { get; set; }
+    
+    [Parameter]
+    public string TopicID { get; set; }
     
 
 
@@ -105,16 +108,16 @@ else
         {
             _question = (Question)previousState.Clone();
         }
-        await QuestionService.Update(_question);
+     //   await QuestionService.Update(_question);
         showBlock(_question.type);
         StateHasChanged();
-        Navigation.NavigateTo("/QuestionList");
+        Navigation.NavigateTo("/QuestionList/"+TopicID);
        
     }
 
     private async void Save()
     {
-        Navigation.NavigateTo("/QuestionList");
+        Navigation.NavigateTo("/QuestionList/"+TopicID);
     }
     
 
