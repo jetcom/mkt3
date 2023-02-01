@@ -7,13 +7,14 @@
 @inject ExamService ExamService;
 @inject NavigationManager Navigation
 
+
 @if (TopicID == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-   <!-- <ExamInfoComponent courseID="@CourseID" examID="@ExamID"/>-->
+   //<ExamInfoComponent courseID="@CourseID" examID="@ExamID"/>-->
     <QuestionListComponent topicID="@TopicID" onDeleteCallBack="OnDelete"/>
 
 }

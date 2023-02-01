@@ -1,30 +1,8 @@
 ﻿@using Mkt3.Data
+@using Mkt3.Components
 @inject NavigationManager Navigation
 @inject QuestionService QuestionService
-
-<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Mkt3</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
-
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="questionList">
-                <span class="oi oi-plus" aria-hidden="true"></span> QuestionEditors
-            </NavLink>
-        </div>
-    </nav>
-</div>
+@inject CurrentNav currentNav
 
 
 <div class="navHeader">
@@ -48,7 +26,6 @@
 </TreeView>
 </div>
 
-<a href="/">New Course</a>
 
 @code {
     private bool collapseNavMenu = true;
@@ -69,42 +46,24 @@
         public IEnumerable<Item> Children { get; set; }
       
     }
-
     List<Item> Items = new();
-    /*IEnumerable<Item> Items = new[]
-    {
-
-        new Item {
-            Parent = "",
-            Text = "CSCI.320",
-            Children = new []
-            {
-                new Item { Parent="CSCI.320", Text = "Quiz 1" },
-                new Item { Parent="CSCI.320",  Text = "Quiz 2" },
-                new Item { Parent="CSCI.320",  Text = "Quiz 3" },
-                new Item { Parent="CSCI.320",  Text = "Final Exam" }
-            }
-        },
-        new Item { Parent = "", Text = "CSCI.420" },
-    };*/
-
     IList<Item> ExpandedNodes = new List<Item>();
     Item SelectedNode;
 
+    
+    
     protected override async Task OnInitializedAsync()
     {
-        var allTopics = await QuestionService.GetTopics();
-
-
-        foreach (var topic in  allTopics.DistinctBy(e => e.Course))
-        {
-            var children = allTopics.FindAll(e => e.Course == topic.Course).OrderBy(e=>e.Name).Select(child => new Item() { Parent = topic.Course, Text = child.Name, TopicID = child.ID}).ToList();
-
-            Items.Add(new Item() { Text = topic.Course, Children = children});
-        }
+  
+        OnTopicChanged();
+        currentNav.onChange += () => UpdateTree();
+  
     }
     
-    private void onSelectedNodeChanged(Item item)
+    
+    
+    
+    public void onSelectedNodeChanged(Item item)
     {
         if (item != null)
         {
@@ -114,6 +73,34 @@
     }
 
 
+    private async void OnTopicChanged()
+    {
+        var allTopics = await QuestionService.GetTopics();
+
+        foreach (var topic in  allTopics.DistinctBy(e => e.Course))
+        {
+            var children = allTopics.FindAll(e => e.Course == topic.Course).OrderBy(e=>e.Name).Select(child => new Item() { Parent = topic.Course, Text = child.Name, TopicID = child.ID}).ToList();
+
+            Items.Add(new Item() { Text = topic.Course, Children = children});
+        }
+        StateHasChanged();
+    }
+
+    private async void UpdateTree()
+    {
+        var allTopics = await QuestionService.GetTopics();
+        foreach (var item in Items)
+        {
+            foreach (var child in item.Children)
+            {
+                var topic = allTopics.Find(t => t.ID == child.TopicID);
+                child.Text = topic.Name;
+            }
+
+        }
+        StateHasChanged();
+    }
+    
   
 
 }

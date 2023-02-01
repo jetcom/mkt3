@@ -1,9 +1,12 @@
 @using Mkt3.Data
 @using Mkt3.Shared
 @inject QuestionService QuestionService
+@inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
+@inject CurrentNav currentNav
 
-<h3>@topic.Name</h3>
+<h3 hidden="@editTitle">@topic.Name <img onclick="@doEdit" width="24px" src="images/pencil.png"/></h3>
+<input class="titleEdit" hidden="@(!editTitle)" id="nameEditBox"  type="text" width="30" value="@topic.Name" @onchange="@TopicChange"/>
 
 
 <table class="table table-dark table-striped">
@@ -67,16 +70,21 @@
     [Parameter]
     public EventCallback onDeleteCallBack { get; set; }
     
+    [Parameter]
+    public EventCallback onTopicChangedCallBack { get; set; }
+    
     private List<Question> questions { get; set; }
     private string currentSort =  "RFreq";
     private string currentOrder = "asc";
     private string imageSortName = "images/sort-asc-white.png";
     private string imageEditName = "images/edit-white.png";
     private Topic topic;
+    private bool editTitle { get; set; }
 
+    
     protected override async Task OnInitializedAsync()
     {
-        
+        editTitle = false;   
         Refresh();
     }
 
@@ -89,9 +97,27 @@
     private async void Refresh()
     {
         topic = await QuestionService.GetTopicsByID(Convert.ToInt32(TopicID));
-        questions = await QuestionService.GetQuestionsByTopic(CourseID, Convert.ToInt32(TopicID));
+        questions = await QuestionService.GetQuestionsByTopic(Convert.ToInt32(TopicID));
+        StateHasChanged();
     }
 
+    private void doEdit(EventArgs args)
+    {
+        editTitle = true;
+    }
+    
+    private async void TopicChange(ChangeEventArgs args)
+    {
+        topic.Name = args.Value.ToString();
+        editTitle = false;
+        await QuestionService.UpdateTopic(topic);
+        currentNav.SetTopics();
+        StateHasChanged();
+        Refresh();
+
+        
+    }
+    
     private Task sortAsync(string sortData)
     {
         

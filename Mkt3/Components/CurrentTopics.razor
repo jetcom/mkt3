@@ -1,0 +1,13 @@
+@using Mkt3.Data
+@inject CurrentNav currentNav
+<h3>currentTopics</h3>
+
+@code {
+    [Parameter]
+    public List<Topic> topics { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        currentNav.SetTopics();
+    }
+}

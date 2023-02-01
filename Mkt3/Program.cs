@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Mkt3.Areas.Identity;
+using Mkt3.Components;
 using Mkt3.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,7 @@ builder.Services
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<QuestionService>();
 builder.Services.AddSingleton<ExamService>();
+builder.Services.AddScoped<CurrentNav>();
 
 builder.Services
     .AddBlazorise( options =>

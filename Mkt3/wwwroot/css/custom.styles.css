@@ -9,3 +9,8 @@ a, .btn-link {
     background: #1e2125;
     width: 100%;
 }
+
+.titleEdit {
+    font-size: x-large;
+    border-radius: 9999px;
+}

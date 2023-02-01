@@ -9,7 +9,7 @@ public class QuestionService
 
 
 
-    public async Task<List<Question>> GetQuestionsByTopic(string course, int topicID)
+    public async Task<List<Question>> GetQuestionsByTopic(int topicID)
     {
         await using var ctx = new Mkt3Context();
 
@@ -64,7 +64,13 @@ public class QuestionService
         return topics;
     }
 
-
+    public async Task<bool> UpdateTopic(Topic topic)
+    {
+        await using var ctx = new Mkt3Context();
+        ctx.Topics.Update(topic);
+        await ctx.SaveChangesAsync();
+        return true;
+    }
  
     public async Task<bool> Update(Question? question, int topicID)
     {
