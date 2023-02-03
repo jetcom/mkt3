@@ -16,7 +16,7 @@ public class QuestionService
         //var topicID = ctx.Topics.Where(t => t.Course == course && t.Name == topic).Select(t => t.ID).ToList();
 
         var questionID = ctx.QuestionTopics.Where(qt => topicID == (qt.TopicID)).Select(q=>q.QuestionID).ToList();
-        var questions = ctx.Questions.Where(q => questionID.Contains(q.ID)).ToList();
+        var questions = ctx.Questions.Where(q => questionID.Contains(q.ID)).OrderBy(q=>q.Prompt).ToList();
 
         foreach(var q in questions)
         {
@@ -47,7 +47,57 @@ public class QuestionService
     public async Task<Question?> GetQuestionAsync(string QuestionID)
     {
         await using var ctx = new Mkt3Context();
-        return ctx.Questions.First(q => q.QuestionLabel == QuestionID);
+        return ctx.Questions.First(q => q.ID == Convert.ToInt32(QuestionID));
+    }
+
+    public List<Group> GetAllGroups(string TopicID)
+    {
+        using var ctx = new Mkt3Context();
+        var groups = ctx.Groups.Where(g => g.TopicID == Convert.ToInt32(TopicID)).OrderBy(g=>g.Name).ToList();
+        return groups;
+    }
+    
+    public Group GetGroup(int? GroupID)
+    {
+        
+        using var ctx = new Mkt3Context();
+        try
+        {
+            return ctx.Groups.First(g => g.ID == Convert.ToInt32(GroupID));
+        }
+        catch
+        {
+            return null;
+        }
+    }
+    
+    public async Task<int> UpdateGroup(Group group)
+    {
+        using var ctx = new Mkt3Context();
+        if (group.ID != null)
+        {
+            ctx.Groups.Update(group);
+        }
+        else
+        {
+            ctx.Groups.Add(group);
+        }
+
+        var i = await ctx.SaveChangesAsync();
+        return group.ID.Value;
+
+    }
+
+    public async Task DeleteGroup(Group group)
+    {
+        await using var ctx = new Mkt3Context();
+        ctx.Groups.Remove(group);
+        var qToUpdate =  ctx.Questions.Where(q => q.GroupID == group.ID).ToList();
+        foreach (var q in qToUpdate)
+        {
+            q.GroupID = null;
+        }
+        await ctx.SaveChangesAsync();
     }
 
     public async Task<Topic> GetTopicsByID(int topicID)
@@ -71,30 +121,36 @@ public class QuestionService
         await ctx.SaveChangesAsync();
         return true;
     }
+    
+    
  
     public async Task<bool> Update(Question? question, int topicID)
     {
         await using var ctx = new Mkt3Context();
-        
+        bool isNew = false;
         if (string.IsNullOrEmpty(question.QuestionLabel)) return false;
         try
         {
-            
-          
+
+
             if (question.ID != 0)
             {
                 ctx.Questions.Update(question);
+
             }
 
             else
             {
                 ctx.Questions.Add(question);
-                
+                isNew = true;
+
             }
 
             var i = await ctx.SaveChangesAsync();
-            ctx.QuestionTopics.Add(new QuestionTopic {QuestionID = question.ID, TopicID = topicID});
+            if (!isNew) return true;
+            ctx.QuestionTopics.Add(new QuestionTopic { QuestionID = question.ID, TopicID = topicID });
             i = await ctx.SaveChangesAsync();
+
             return true;
         }
         catch

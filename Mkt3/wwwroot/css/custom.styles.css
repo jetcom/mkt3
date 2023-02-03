@@ -14,3 +14,7 @@ a, .btn-link {
     font-size: x-large;
     border-radius: 9999px;
 }
+
+.modal-blue {
+    background-color: #2c0a51;
+}

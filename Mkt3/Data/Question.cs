@@ -17,6 +17,11 @@ public class Question: ICloneable
     public List<string> WrongAnswers { get; set; }
     
     public List<string> ExamTags { get; set; } 
+    
+    public bool customLineLength { get; set; }
+    public string? LineLength { get; set; }
+    
+    public int? GroupID { get; set; }
 
 
     public Question()

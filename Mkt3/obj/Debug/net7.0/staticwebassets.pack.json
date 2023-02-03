@@ -73,12 +73,20 @@
       "PackagePath": "staticwebassets/images/folder.png"
     },
     {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/minus.png",
+      "PackagePath": "staticwebassets/images/minus.png"
+    },
+    {
       "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/new.png",
       "PackagePath": "staticwebassets/images/new.png"
     },
     {
       "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/pencil.png",
       "PackagePath": "staticwebassets/images/pencil.png"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/plus.png",
+      "PackagePath": "staticwebassets/images/plus.png"
     },
     {
       "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/rename.png",

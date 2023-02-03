@@ -1,5 +1,5 @@
-@page "/editQuestion/{questionID}/{TopicID}"
-@page "/editQuestion/{TopicID}"
+@page "/editQuestion/{TopicID}/{questionID}"
+@page "/editQuestion/add/{TopicID}"
 @inject NavigationManager Navigation
 @using Mkt3.Data
 @using Mkt3.Components
@@ -60,6 +60,8 @@ else
     private Question? previousState;
     string[] types = new string[] { "True/False", "Short Answer", "Long Answer" };
     private string selectedType;
+    
+    
     protected override async Task OnInitializedAsync()
     {
         if (questionID != null)

@@ -93,7 +93,7 @@ a, .btn-link {
 
 .form-field-label
 {
-    width: 105px;
+    width: 125px;
     text-align: right;
     vertical-align: top;
     padding-top: 7px;
@@ -101,7 +101,7 @@ a, .btn-link {
 
 .form-field-label-wide
 {
-    width: 175px;
+    width: 200px;
 }
 
 .input-box-dark

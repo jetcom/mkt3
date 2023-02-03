@@ -23,6 +23,9 @@
         <TableHeaderCell style="width: 150px">
             <span @onclick="@(async () => await sortAsync("Type"))"><img width="12" src="@imageSortName"/>Type
             </span> </TableHeaderCell>
+         <TableHeaderCell style="width: 150px">
+                <span @onclick="@(async () => await sortAsync("Group"))"><img width="12" src="@imageSortName"/>Group
+                </span> </TableHeaderCell>
         <TableHeaderCell style="width:10px;">
             
            
@@ -41,15 +44,32 @@
                 </Authorized>
             </AuthorizeView>
        
-            <TableRowCell><a href="/editQuestion/@question.QuestionLabel">@question.Prompt</a>
-                @foreach (var tag in question.ExamTags)
-                                 {
-                                     <button class="tag">@tag</button><button class="tag-remove">X</button>
-                                 }
-                </TableRowCell>
+            <TableRowCell><a href="/editQuestion/@TopicID/@question.ID">@question.Prompt</a>
+                @{/*
+                  foreach (var tag in question.ExamTags)
+                  {
+                      <button class="tag">@tag</button>
+                      <button class="tag-remove">X</button>
+                  }
+               */
+                }
+            </TableRowCell>
+      
             <TableRowCell>@question.type</TableRowCell>
-     
-       
+              <TableRowCell>
+                  @{
+                      
+                    if (question.GroupID != null && question.GroupID != 0)
+                    {
+                            var group = QuestionService.GetGroup(question.GroupID);
+
+                        if (group != null)
+                        {
+                            <span>@group.Name</span>
+                        }
+                    }
+                }</TableRowCell>
+            
             <TableRowCell><button type="button" class="buttons buttons-red" @onclick="@(async () => await Delete(question))">Delete</button>   </TableRowCell>
 
 
@@ -58,7 +78,7 @@
     </TableBody>
 </table>
 
-<a href="/editQuestion/@TopicID" class="buttons">Add</a>    
+<a href="/editQuestion/add/@TopicID" class="buttons">Add</a>    
 @code {
 
     [Parameter] 

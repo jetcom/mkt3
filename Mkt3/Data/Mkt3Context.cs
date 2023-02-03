@@ -9,6 +9,7 @@ public class Mkt3Context: DbContext
     public DbSet<QuestionTopic> QuestionTopics { get; set; }
     public DbSet<Topic> Topics { get; set; }
     public DbSet<Question> Questions { get; set; }
+    public DbSet<Group> Groups { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql(@"Host=localhost;Username=mkt;Password=mkt3;Database=mkt");

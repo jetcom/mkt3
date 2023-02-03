@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mkt3.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Mkt3.Migrations
 {
     [DbContext(typeof(Mkt3Context))]
-    partial class Mkt3ContextModelSnapshot : ModelSnapshot
+    [Migration("20230202175537_groups2")]
+    partial class groups2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,7 +87,7 @@ namespace Mkt3.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
-                    b.Property<int?>("MaxQuestions")
+                    b.Property<int>("MaxQuestions")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
@@ -114,10 +117,11 @@ namespace Mkt3.Migrations
                         .IsRequired()
                         .HasColumnType("text[]");
 
-                    b.Property<int?>("GroupID")
+                    b.Property<int>("GroupID")
                         .HasColumnType("integer");
 
                     b.Property<string>("LineLength")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("Points")

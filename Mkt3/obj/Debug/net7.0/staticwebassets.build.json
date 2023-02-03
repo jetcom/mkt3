@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "+WEY3n9ongzi3+J/owXzNR7GORwN0UH5s7pKUJ5GN0Q=",
+  "Hash": "9Bc4KEdEoX/ftivg5+a2I5lf4m4vy1LEaiN+Xv6E6G8=",
   "Source": "Mkt3",
   "BasePath": "_content/Mkt3",
   "Mode": "Default",
@@ -2006,6 +2006,23 @@
       "OriginalItemSpec": "wwwroot/images/folder.png"
     },
     {
+      "Identity": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/minus.png",
+      "SourceId": "Mkt3",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/",
+      "BasePath": "_content/Mkt3",
+      "RelativePath": "images/minus.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/minus.png"
+    },
+    {
       "Identity": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/new.png",
       "SourceId": "Mkt3",
       "SourceType": "Discovered",
@@ -2038,6 +2055,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/pencil.png"
+    },
+    {
+      "Identity": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/plus.png",
+      "SourceId": "Mkt3",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/",
+      "BasePath": "_content/Mkt3",
+      "RelativePath": "images/plus.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/plus.png"
     },
     {
       "Identity": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/rename.png",
