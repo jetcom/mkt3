@@ -8,9 +8,8 @@
 
 <PageTitle>Question Editor</PageTitle>
 
-<h1>Edit or Add Questions</h1>
 
-<p>This page will allow you to edit a question</p>
+<p>Select a question type and enter values.  Click save when done.  </p>
 
 
 @if (_question == null)
@@ -25,12 +24,12 @@ else
     <div class="form-field">
         <div class="form-field-label" for="lastNameInput">Type: </div>
         <div class="form-field-control">
-            <select value="@selectedType" @onchange="QuestionTypeChange">
+            <Select TValue="string" SelectedValue="@selectedType" SelectedValueChanged="@QuestionTypeChange">
          	    @foreach (var id in types)
          		{
-         			<option value="@id">@id</option>
+         			<SelectItem Value="@id">@id</SelectItem>
          		}
-            </select>
+            </Select>
         </div>
     </div>
 
@@ -41,6 +40,10 @@ else
     @if (_showSA)
     {
         <ShortAnswerComponent question=_question TopicID="@TopicID" onResetClick="Reset" onSaveClick="Save"/>
+    }
+    @if (_showLA)
+    {
+        <LongAnswerComponent question=_question TopicID="@TopicID" onResetClick="Reset" onSaveClick="Save"/>
     }
     
 }
@@ -57,8 +60,10 @@ else
     private Question? _question;
     private bool _showTF = false;
     private bool _showSA = false;
+    private bool _showLA = false;
+    private bool _showMC = false;
     private Question? previousState;
-    string[] types = new string[] { "True/False", "Short Answer", "Long Answer" };
+    string[] types = new string[] { "True/False", "Short Answer", "Long Answer", "Multiple Choice" };
     private string selectedType;
     
     
@@ -79,10 +84,11 @@ else
         showBlock(selectedType);
     }
 
-    private void QuestionTypeChange(ChangeEventArgs obj)
+    private Task QuestionTypeChange(string obj)
     {
-        var selected = obj.Value.ToString();
+        var selected = obj;
         showBlock(selected);
+        return Task.CompletedTask;
     }
     
     private void showBlock(string type) 
@@ -90,6 +96,8 @@ else
 
         _showTF = false;
         _showSA = false;
+        _showLA = false;
+        _showMC = false;
         if (type == "True/False")
         {
             _showTF = true;
@@ -98,9 +106,17 @@ else
         {
             _showSA = true;
         }
+        else if (type == "Long Answer")
+        {
+            _showLA = true;
+        }
+        else if (type == "Multiple Choice")
+        {
+            _showMC = true;
+        }
         selectedType = type;
 
-
+        StateHasChanged();
 
     }
     

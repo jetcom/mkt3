@@ -1,6 +1,7 @@
 @using Mkt3.Data
 @using Mono.TextTemplating
 @using Blazorise.Extensions
+@using System.Diagnostics
 
 @inject QuestionService QuestionService;
 
@@ -15,14 +16,7 @@ else
     <EditForm Model="@question" OnValidSubmit="@HandleValidSubmit">
         <div class="form-fields">
         
-            <div class="form-field">
-                <div class="form-field-label" for="lastNameInput">QuestionID: </div>
-                <div class="form-field-control"><input cols="50" @bind="@question.QuestionLabel"/></div>
-            </div>
-            <div class="form-field">
-                <div class="form-field-label" for="lastNameInput">Prompt: </div>
-                <div class="form-field-control"><textarea rows="4" cols="50" @bind="@question.Prompt"/></div>
-            </div>
+            <QuestionPrompt question="question"/>
            
             @{ solIndex = 0; }
             @foreach (var sol in question.Solutions)
@@ -40,7 +34,10 @@ else
                         }
                     </div>
                     @{ var index = solIndex;}
-                    <div class="form-field-control"><input size="50" @bind="@question.Solutions[index]"/></div>
+                    <div class="form-field-control">
+                        <TextEdit cols="50" @bind-text="@question.Solutions[index]"/>
+                    </div>
+                    <div class="form-field-control" style="vertical-align: middle; padding-left:  0px;">
                     @if (question.Solutions.Count - 1 == solIndex)
                     {
                     
@@ -50,39 +47,12 @@ else
                             <img style="width:24px; margin-left: 5px;" src="images/minus.png" onclick="@deleteSolution"/>
                         }
                     }
+                    </div>
                 </div>
                 solIndex++;
             }
-         
-            <div class="form-field">
-                <div class="form-field-label" for="lastNameInput">Points: </div>
-                @{
-                    question.GroupID ??= 0;
-                }
-                <div class="form-field-control"><input disabled="@pointsDisabled" type="number" size="5" @bind="@question.Points"/>
-                    or Group: 
-                    <select value="@selectedGroup" @onchange="GroupChange">
-                        @{
-                            var groups = QuestionService.GetAllGroups(TopicID);
-                            <option value="0"><b>No Group</b></option>
-                            foreach (var group in groups)
-                            {
-                                <option value="@group.ID">@group.Name (@group.Points) </option>
-                            }
-                            <option value="New">New Group...</option>
-                        }
-                        
-                    </select>
-                    <img hidden="@(!pointsDisabled)" onclick="@ShowModal" width="24px" src="images/pencil.png"/>
-                </div>
-            </div>
-            <!--   <div class="form-field">
-                <div class="form-field-label" for="lastNameInput">Line Length: </div>
-                <div class="form-field-control">
-                    <input type="checkbox" @bind="@question.customLineLength" />
-                    <input @bind="@question.LineLength"/>
-                </div>
-            </div>-->
+            
+            <PointsAndGroups question=question TopicID="@TopicID" />
             <div class="form-field">
                 <div class="form-field-label" for="lastNameInput"> </div>
                 <div class="form-field-control">
@@ -92,36 +62,9 @@ else
             </div>
         </div>
     </EditForm>
-  
-    <Modal @ref="modalRef">
-        <ModalContent Centered>
-            <ModalHeader class="modal-blue" >
-                <ModalTitle>Edit Group</ModalTitle>
-                <CloseButton />
-            </ModalHeader>
-            <ModalBody class="bg-dark">
-                <Field>
-                    <FieldLabel>Name</FieldLabel>
-                    <TextEdit Placeholder="Enter name..." @bind-Text="@currentGroupName" />
-                </Field>
-                <Field>
-                    <FieldLabel>Points</FieldLabel>
-                    <TextEdit MaskType="MaskType.Numeric" Placeholder="Points" @bind-Text="@currentGroupPoints" />
-                </Field>
-            </ModalBody>
-            <ModalFooter class="bg-dark">
-                @{
-                    if (selectedGroup != "New")
-                    {
-                        <Button Color="Color.Danger" Clicked="@DeleteGroup">Delete</Button>
-                    }
-                }
-                <Button Color="Color.Primary" Clicked="@HideModal">Close</Button>
-                <Button Color="Color.Primary" Clicked="@SaveGroupChanges">Save</Button>
-            </ModalFooter>
-        </ModalContent>
-    </Modal>
 
+   
+    
 }
 
 @code {
@@ -137,114 +80,10 @@ else
     
     private int solIndex { get; set; }
     
-    private string selectedGroup { get; set; }
-    private string oldSelectedGroup { get; set; }
-    private string currentGroupName { get; set; }
-    private string currentGroupPoints { get; set; }
-    
-    private bool pointsDisabled{ get; set; }
-    private Modal modalRef;
-
-    private Task HideModal()
-    {
-        if (selectedGroup == "New")
-        {
-            selectedGroup = oldSelectedGroup;
-        }
-        return modalRef.Hide(); 
-    }
-    
-    private Task ShowModal()
-    {
-        if (selectedGroup != "New")
-        {
-            var currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup));
-            currentGroupName = currentGroup.Name;
-            currentGroupPoints = currentGroup.Points.ToString();
-        }
-      
-        return modalRef.Show();
-    }
-
-    private async Task<Task> DeleteGroup()
-    {
-        var currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup));
-        QuestionService.DeleteGroup(currentGroup);
-        selectedGroup = "0";
-        return modalRef.Hide();
-        
-    }
-
-    private async Task<Task> SaveGroupChanges()
-    {
-        var currentGroup = new Group();
-        if (selectedGroup != "New")
-        {
-            currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup));
-        }
-        
-        currentGroup.Name = currentGroupName;
-        currentGroup.Points = Convert.ToInt32(currentGroupPoints);
-        currentGroup.TopicID = Convert.ToInt32(TopicID);
-        selectedGroup = (await QuestionService.UpdateGroup(currentGroup)).ToString();
-   
-        return modalRef.Hide();
-    }
-
-
     protected override async Task OnInitializedAsync()
     {
-        setGroup(question.GroupID.ToString());
-        if (selectedGroup != null && selectedGroup != "0")
-        {
-            var currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup));
-            currentGroupName = currentGroup.Name;
-            currentGroupPoints = currentGroup.Points.ToString();
-        }
-
-    //    _question = question as ShortAnswerQuestion;
+        Debug.Write("Short Answer");
     }
-    
-    
-    private void GroupChange(ChangeEventArgs obj)
-    {
-        oldSelectedGroup = selectedGroup;
-        var selected = obj.Value.ToString();
-        setGroup(selected);
- 
-    }
-    
-    
-    private void setGroup(string? selected)
-    {
-        if (selected.IsNullOrEmpty() || selected == "0")
-        {
-            question.GroupID = 0;
-            pointsDisabled = false;
-        }
-        else if (selected == "New")
-        {
-            selectedGroup = selected;
-            currentGroupName = "";
-            currentGroupPoints = "";
-            ShowModal();
-        }
-        else
-        {
-            var group = QuestionService.GetGroup(Convert.ToInt32(selected));
-            if (group == null)
-            {
-                selected = "0";
-            }
-            selectedGroup = selected;
-            question.GroupID = Convert.ToInt32(selected);
-            
-            pointsDisabled = true;
-
-        }
-        StateHasChanged(); 
-    }
-    
     private async Task HandleValidSubmit()
     {
         question.type = "Short Answer";

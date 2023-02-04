@@ -1,0 +1,182 @@
+@using Mkt3.Data
+@using Mono.TextTemplating
+@using Blazorise.Extensions
+
+@inject QuestionService QuestionService;
+
+<div class="form-field">
+    <div class="form-field-label" for="lastNameInput">Points: </div>
+    @{
+        question.GroupID ??= 0;
+    }
+    <div class="form-field-control">
+        <!--<input disabled="@pointsDisabled" type="number" size="5" @bind="@question.Points"/>-->
+        <div style="float: left; width: 120px"><NumericPicker  disabled="@pointsDisabled"  @bind-Value="@question.Points"/></div>
+        <div style="display: inline; float: left; padding: 5px;">
+            &NonBreakingSpace; or Group: &NonBreakingSpace;
+        </div>
+          <div style="display: inline; float: left">
+            <Select TValue="int" SelectedValue="@selectedGroup" SelectedValueChanged="GroupChange">
+                @{
+                    var groups = QuestionService.GetAllGroups(TopicID);
+                    <SelectItem Value="0"><b>No Group</b></SelectItem>
+                    foreach (var group in groups)
+                    {
+                        <SelectItem Value="@group.ID">@group.Name (@group.Points) </SelectItem>
+                    }
+                    <SelectItem Value="-1">New Group...</SelectItem>
+                }
+
+            </Select>
+        </div>
+         <div style="display: inline; float: left">
+             &NonBreakingSpace;<img hidden="@(!pointsDisabled)" onclick="@ShowModal" width="32px" src="images/pencil.png"/>
+             </div>
+     
+    </div>
+</div>
+
+
+    <Modal @ref="modalRef">
+        <ModalContent Centered>
+            <ModalHeader class="modal-blue" >
+                <ModalTitle>Edit Group</ModalTitle>
+                <CloseButton />
+            </ModalHeader>
+            <ModalBody class="bg-dark">
+                <Field>
+                    <FieldLabel>Name</FieldLabel>
+                    <TextEdit Placeholder="Enter name..." @bind-Text="@currentGroupName" />
+                </Field>
+                <Field>
+                    <FieldLabel>Points</FieldLabel>
+                    <TextEdit MaskType="MaskType.Numeric" Placeholder="Points" @bind-Text="@currentGroupPoints" />
+                </Field>
+            </ModalBody>
+            <ModalFooter class="bg-dark">
+                @{
+                    if (selectedGroup != -1)
+                    {
+                        <Button Color="Color.Danger" Clicked="@DeleteGroup">Delete</Button>
+                    }
+                }
+                <Button Color="Color.Primary" Clicked="@HideModal">Close</Button>
+                <Button Color="Color.Primary" Clicked="@SaveGroupChanges">Save</Button>
+            </ModalFooter>
+        </ModalContent>
+    </Modal>
+
+@code {
+    [Parameter]
+    public Question? question { get; set; }
+    
+    [Parameter]
+    public string TopicID { get; set; }
+
+    private bool pointsDisabled { get; set; }
+    private int selectedGroup { get; set; }
+    private int oldSelectedGroup { get; set; }
+    private string currentGroupName { get; set; }
+    private string currentGroupPoints { get; set; }
+        
+    private Modal modalRef;
+
+    private Task HideModal()
+    {
+        if (selectedGroup == -1)
+        {
+            selectedGroup = oldSelectedGroup;
+        }
+        return modalRef.Hide(); 
+    }
+    
+    private Task ShowModal()
+    {
+        if (selectedGroup != -1)
+        {
+            var currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup));
+            currentGroupName = currentGroup.Name;
+            currentGroupPoints = currentGroup.Points.ToString();
+        }
+      
+        return modalRef.Show();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        setGroup(question.GroupID);
+        if (selectedGroup != null && selectedGroup != 0)
+        {
+            var currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup));
+            currentGroupName = currentGroup.Name;
+            currentGroupPoints = currentGroup.Points.ToString();
+        }
+        
+    }
+    
+    private async Task<Task> DeleteGroup()
+    {
+        var currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup));
+        QuestionService.DeleteGroup(currentGroup);
+        selectedGroup = 0;
+        return modalRef.Hide();
+        
+    }
+
+    private async Task<Task> SaveGroupChanges()
+    {
+        var currentGroup = new Group();
+        if (selectedGroup != -1)
+        {
+            currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup));
+        }
+        
+        currentGroup.Name = currentGroupName;
+        currentGroup.Points = Convert.ToInt32(currentGroupPoints);
+        currentGroup.TopicID = Convert.ToInt32(TopicID);
+        selectedGroup = (await QuestionService.UpdateGroup(currentGroup));
+   
+        return modalRef.Hide();
+    }
+    
+    private Task GroupChange(int obj)
+    {
+        if (selectedGroup == null) selectedGroup = 0;
+        oldSelectedGroup = selectedGroup;
+        var selected = obj;
+        setGroup(selected);
+        return Task.CompletedTask;
+    }
+    
+    
+    private void setGroup(int? selected)
+    {
+        if (selected is null or 0)
+        {
+            question.GroupID = 0;
+            pointsDisabled = false;
+        }
+        else if (selected == -1)
+        {
+            selectedGroup = selected.Value;
+            currentGroupName = "";
+            currentGroupPoints = "";
+            ShowModal();
+        }
+        else
+        {
+            var group = QuestionService.GetGroup(Convert.ToInt32(selected));
+            if (group == null)
+            {
+                selected = 0;
+            }
+            selectedGroup = selected.Value;
+            question.GroupID = Convert.ToInt32(selected);
+            
+            pointsDisabled = true;
+
+        }
+        StateHasChanged(); 
+    }
+
+}

@@ -1,0 +1,19 @@
+@using Mkt3.Data
+
+<div class="form-field">
+                <div class="form-field-label" for="lastNameInput">QuestionID: </div>
+                <div class="form-field-control">
+                    <TextEdit cols="50" @bind-text="@question.QuestionLabel"/>
+                </div>
+            </div>
+            <div class="form-field">
+                <div class="form-field-label" for="lastNameInput">Prompt: </div>
+                <div class="form-field-control">
+                    <MemoEdit Rows="4" cols="50" @bind-text="@question.Prompt"/>
+                </div>
+            </div>
+
+@code {
+    [Parameter]
+    public Question? question { get; set; }  
+}

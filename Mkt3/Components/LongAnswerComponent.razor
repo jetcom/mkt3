@@ -1,6 +1,10 @@
 @using Mkt3.Data
+@using Mono.TextTemplating
+@using Blazorise.Extensions
 @using System.Diagnostics
+
 @inject QuestionService QuestionService;
+
 @if (question == null)
 {
     <p>
@@ -9,68 +13,65 @@
 }
 else
 {
-           
     <EditForm Model="@question" OnValidSubmit="@HandleValidSubmit">
         <div class="form-fields">
-   
-             <QuestionPrompt question="question"></QuestionPrompt>
+        
+          <QuestionPrompt question="question"></QuestionPrompt>
             <div class="form-field">
-                <div class="form-field-label" for="lastNameInput">Solution: </div>
+                  <div class="form-field-label" for="lastNameInput">Solution: </div>
                 <div class="form-field-control">
-                    <Select @bind-SelectedValue="@question.Solutions[0]">
-                        <SelectItem value="false">false</SelectItem>
-                        <SelectItem value="true">true</SelectItem>
-                    </Select>
+                    <MemoEdit Rows="8" cols="50"  ReplaceTab TabSize="4" @bind-text="@question.Solutions[0]"/>
+                    
                 </div>
-            </div>
-            <PointsAndGroups question=question TopicID="@TopicID"></PointsAndGroups>
+                </div>
+           
+           
+            
+            <PointsAndGroups question=question TopicID="@TopicID" />
             <div class="form-field">
                 <div class="form-field-label" for="lastNameInput"> </div>
                 <div class="form-field-control">
-                    <button type="submit" class="buttons">Save</button>    
+                    <button type="submit" class="buttons">Save</button>
                     <button type="button" class="buttons" @onclick="@(async () => ResetForm())">Cancel</button>
                 </div>
-                </div>
+            </div>
         </div>
     </EditForm>
+
    
+    
 }
 
 @code {
-
     [Parameter]
     public Question? question { get; set; }
-    
     
     [Parameter]
     public EventCallback onResetClick { get; set; }
     [Parameter]
     public EventCallback onSaveClick { get; set; }
     [Parameter]
-    public string id { get; set; }
-    [Parameter]
     public string TopicID { get; set; }
+    
     
 
     protected override async Task OnInitializedAsync()
     {
-        Debug.Write("True/False");
+        Debug.Write("Long Answer");
     }
-    
     private async Task HandleValidSubmit()
     {
-
-        question.type = "True/False";
+        question.type = "Long Answer";
         if (await QuestionService.Update(question, Convert.ToInt32(TopicID)))
         {
- 
-
+            await onSaveClick.InvokeAsync();
         }
-        await onSaveClick.InvokeAsync();
-   
     }
-    private async Task ResetForm()
+    
+    
+    private async void ResetForm()
     {
         await onResetClick.InvokeAsync();
+        
     }
 }
