@@ -20,7 +20,23 @@ else
             <div class="form-field">
                   <div class="form-field-label" for="lastNameInput">Solution: </div>
                 <div class="form-field-control">
-                    <MemoEdit Rows="8" cols="50"  ReplaceTab TabSize="4" @bind-text="@question.Solutions[0]"/>
+         
+                    <RadzenHtmlEditor  @bind-Value=@solution style="height: 300px; width: 600px;" UploadUrl="upload/image" >
+                   <RadzenHtmlEditorUndo />
+                   <RadzenHtmlEditorRedo />
+                   <RadzenHtmlEditorSeparator />
+                   <RadzenHtmlEditorBold />
+                   <RadzenHtmlEditorItalic />
+                   <RadzenHtmlEditorUnderline />
+                   <RadzenHtmlEditorSeparator />
+                   <RadzenHtmlEditorOrderedList/>
+                   <RadzenHtmlEditorUnorderedList/>
+                   <RadzenHtmlEditorAlignLeft/>
+                   <RadzenHtmlEditorAlignCenter/>
+                   <RadzenHtmlEditorAlignRight/>
+               </RadzenHtmlEditor>
+          
+              
                     
                 </div>
                 </div>
@@ -53,14 +69,25 @@ else
     [Parameter]
     public string TopicID { get; set; }
     
+    private string solution { get; set; }
+    
+    
+    
+
+
+    
+    
+    
     
 
     protected override async Task OnInitializedAsync()
     {
+        solution = question.Solutions[0];
         Debug.Write("Long Answer");
     }
     private async Task HandleValidSubmit()
     {
+        question.Solutions[0] = solution;
         question.type = "Long Answer";
         if (await QuestionService.Update(question, Convert.ToInt32(TopicID)))
         {

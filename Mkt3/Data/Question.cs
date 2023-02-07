@@ -23,6 +23,10 @@ public class Question: ICloneable
     
     public int? GroupID { get; set; }
 
+    [NotMapped]
+    public string Group { get; set; }
+
+
 
     public Question()
     {

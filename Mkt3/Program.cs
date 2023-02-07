@@ -1,6 +1,7 @@
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
+using Blazorise.RichTextEdit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Mkt3.Areas.Identity;
 using Mkt3.Components;
 using Mkt3.Data;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +31,12 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<QuestionService>();
 builder.Services.AddSingleton<ExamService>();
 builder.Services.AddScoped<CurrentNav>();
+builder.Services.AddScoped<DialogService>();
+builder.Services.AddScoped<NotificationService>();
+builder.Services.AddScoped<TooltipService>();
+builder.Services.AddScoped<ContextMenuService>();
+builder.Services
+    .AddBlazoriseRichTextEdit( );
 
 builder.Services
     .AddBlazorise( options =>

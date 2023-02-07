@@ -10,14 +10,19 @@
         question.GroupID ??= 0;
     }
     <div class="form-field-control">
-        <!--<input disabled="@pointsDisabled" type="number" size="5" @bind="@question.Points"/>-->
-        <div style="float: left; width: 120px"><NumericPicker  disabled="@pointsDisabled"  @bind-Value="@question.Points"/></div>
+       
+        <div style="float: left; width: 120px"><RadzenNumeric  disabled="@pointsDisabled"  @bind-Value="@question.Points"/></div>
         <div style="display: inline; float: left; padding: 5px;">
             &NonBreakingSpace; or Group: &NonBreakingSpace;
         </div>
-          <div style="display: inline; float: left">
-            <Select TValue="int" SelectedValue="@selectedGroup" SelectedValueChanged="GroupChange">
+        <div style="display: inline; float: left">
+             <RadzenDropDown AllowClear="true" TValue="int" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowFiltering="true" Class="w-100" 
+                             Placeholder="No Group" @bind-Value="@selectedGroup" Data=@QuestionService.GetAllGroups(TopicID) TextProperty="Name" ValueProperty="ID" 
+                             Change="GroupChange" />
+                        
                 @{
+                    /*
+                    <Select TValue="int" SelectedValue="@selectedGroup" SelectedValueChanged="GroupChange">
                     var groups = QuestionService.GetAllGroups(TopicID);
                     <SelectItem Value="0"><b>No Group</b></SelectItem>
                     foreach (var group in groups)
@@ -25,10 +30,10 @@
                         <SelectItem Value="@group.ID">@group.Name (@group.Points) </SelectItem>
                     }
                     <SelectItem Value="-1">New Group...</SelectItem>
+                    </Select>*/
                 }
 
-            </Select>
-        </div>
+          </div>
          <div style="display: inline; float: left">
              &NonBreakingSpace;<img hidden="@(!pointsDisabled)" onclick="@ShowModal" width="32px" src="images/pencil.png"/>
              </div>
@@ -74,6 +79,7 @@
     public string TopicID { get; set; }
 
     private bool pointsDisabled { get; set; }
+    private string selGroup { get; set; }
     private int selectedGroup { get; set; }
     private int oldSelectedGroup { get; set; }
     private string currentGroupName { get; set; }
@@ -125,7 +131,7 @@
 
     private async Task<Task> SaveGroupChanges()
     {
-        var currentGroup = new Group();
+        var currentGroup = new Data.Group();
         if (selectedGroup != -1)
         {
             currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup));
@@ -139,11 +145,11 @@
         return modalRef.Hide();
     }
     
-    private Task GroupChange(int obj)
+    private Task GroupChange(Object obj)
     {
         if (selectedGroup == null) selectedGroup = 0;
         oldSelectedGroup = selectedGroup;
-        var selected = obj;
+        var selected = Convert.ToInt32(obj);
         setGroup(selected);
         return Task.CompletedTask;
     }

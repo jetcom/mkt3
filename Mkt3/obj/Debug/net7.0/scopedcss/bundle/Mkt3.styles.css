@@ -1,3 +1,5 @@
+@import '_content/Blazorise.RichTextEdit/Blazorise.RichTextEdit.bundle.scp.css';
+
 /* _content/Mkt3/Shared/MainLayout.razor.rz.scp.css */
 .page[b-02b1tenxgv] {
     position: relative;
@@ -52,7 +54,7 @@ main[b-02b1tenxgv] {
     }
 
     .sidebar[b-02b1tenxgv] {
-        width: 250px;
+       
         height: 100vh;
         position: sticky;
         top: 0;

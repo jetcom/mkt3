@@ -17,10 +17,9 @@ else
             <div class="form-field">
                 <div class="form-field-label" for="lastNameInput">Solution: </div>
                 <div class="form-field-control">
-                    <Select @bind-SelectedValue="@question.Solutions[0]">
-                        <SelectItem value="false">false</SelectItem>
-                        <SelectItem value="true">true</SelectItem>
-                    </Select>
+                    <RadzenDropDown AllowClear="false" TValue="string" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" 
+                                    @bind-Value="solution" AllowFiltering="false" Class="w-100" Data=@types  />
+                    
                 </div>
             </div>
             <PointsAndGroups question=question TopicID="@TopicID"></PointsAndGroups>
@@ -51,15 +50,20 @@ else
     [Parameter]
     public string TopicID { get; set; }
     
+    
+
+    private List<string> types = new() { "True", "False" };
+    private string solution;
 
     protected override async Task OnInitializedAsync()
     {
+        solution = question.Solutions[0] == "True" ? "True" : "False";
         Debug.Write("True/False");
     }
     
     private async Task HandleValidSubmit()
     {
-
+        question.Solutions[0] = solution;
         question.type = "True/False";
         if (await QuestionService.Update(question, Convert.ToInt32(TopicID)))
         {

@@ -1,6 +1,8 @@
 using System.ComponentModel;
+using System.Diagnostics;
 using Humanizer;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace Mkt3.Data;
 
@@ -17,15 +19,16 @@ public class QuestionService
 
         var questionID = ctx.QuestionTopics.Where(qt => topicID == (qt.TopicID)).Select(q=>q.QuestionID).ToList();
         var questions = ctx.Questions.Where(q => questionID.Contains(q.ID)).OrderBy(q=>q.Prompt).ToList();
-
+    
         foreach(var q in questions)
         {
-            var tagIDs = ctx.QuestionTopics.Where(qt => qt.QuestionID == q.ID).Select(q=>q.TopicID).ToList();
-            foreach (var tag in ctx.Topics.Where(t => tagIDs.Contains(t.ID)).ToList())
+            try
             {
-           
-                q.ExamTags.Add(tag.Course + " "+tag.Name);
-                
+                q.Group = ctx.Groups.First(g => g.ID == Convert.ToInt32(q.GroupID)).Name;
+            }
+            catch
+            {
+                q.Group = "";
             }
         }
         
@@ -54,6 +57,7 @@ public class QuestionService
     {
         using var ctx = new Mkt3Context();
         var groups = ctx.Groups.Where(g => g.TopicID == Convert.ToInt32(TopicID)).OrderBy(g=>g.Name).ToList();
+        groups.Add(new Group() {ID=-1, Name="New Group..."});
         return groups;
     }
     
@@ -106,6 +110,13 @@ public class QuestionService
         var topic = ctx.Topics.First(t => t.ID == topicID);
         return topic;
     }
+
+    public List<string> GetAllCoursess()
+    {
+        using var ctx = new Mkt3Context();
+        var topics = ctx.Topics.Select(t => t.Course).ToList();
+        return topics;
+    }
     
     public async Task<List<Topic>> GetTopics()
     {
@@ -120,6 +131,22 @@ public class QuestionService
         ctx.Topics.Update(topic);
         await ctx.SaveChangesAsync();
         return true;
+    }
+
+    public async Task AddTopic(string TopicName)
+    {
+        try
+        {
+            await using var ctx = new Mkt3Context();
+            var t = new Topic { Course = TopicName, Name = "Default Pool" };
+            ctx.Topics.Add(t);
+            await ctx.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+           Debug.WriteLine(e); 
+        }
+
     }
     
     

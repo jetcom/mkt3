@@ -21,6 +21,10 @@
       "PackagePath": "staticwebassets/css/custom.styles.css"
     },
     {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/css/material-dark-base.css",
+      "PackagePath": "staticwebassets/css/material-dark-base.css"
+    },
+    {
       "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/css/open-iconic/FONT-LICENSE",
       "PackagePath": "staticwebassets/css/open-iconic"
     },
@@ -63,6 +67,90 @@
     {
       "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/favicon.png",
       "PackagePath": "staticwebassets/favicon.png"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/MaterialIcons-Regular.woff",
+      "PackagePath": "staticwebassets/fonts/MaterialIcons-Regular.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/SourceSansPro-Black.woff",
+      "PackagePath": "staticwebassets/fonts/SourceSansPro-Black.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/SourceSansPro-BlackIt.woff",
+      "PackagePath": "staticwebassets/fonts/SourceSansPro-BlackIt.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/SourceSansPro-Bold.woff",
+      "PackagePath": "staticwebassets/fonts/SourceSansPro-Bold.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/SourceSansPro-BoldIt.woff",
+      "PackagePath": "staticwebassets/fonts/SourceSansPro-BoldIt.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/SourceSansPro-ExtraLight.woff",
+      "PackagePath": "staticwebassets/fonts/SourceSansPro-ExtraLight.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/SourceSansPro-ExtraLightIt.woff",
+      "PackagePath": "staticwebassets/fonts/SourceSansPro-ExtraLightIt.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/SourceSansPro-It.woff",
+      "PackagePath": "staticwebassets/fonts/SourceSansPro-It.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/SourceSansPro-Light.woff",
+      "PackagePath": "staticwebassets/fonts/SourceSansPro-Light.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/SourceSansPro-LightIt.woff",
+      "PackagePath": "staticwebassets/fonts/SourceSansPro-LightIt.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/SourceSansPro-Regular.woff",
+      "PackagePath": "staticwebassets/fonts/SourceSansPro-Regular.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/SourceSansPro-Semibold.woff",
+      "PackagePath": "staticwebassets/fonts/SourceSansPro-Semibold.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/SourceSansPro-SemiboldIt.woff",
+      "PackagePath": "staticwebassets/fonts/SourceSansPro-SemiboldIt.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/roboto-regular.woff",
+      "PackagePath": "staticwebassets/fonts/roboto-regular.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/roboto-v15-latin-300.woff",
+      "PackagePath": "staticwebassets/fonts/roboto-v15-latin-300.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/roboto-v15-latin-700.woff",
+      "PackagePath": "staticwebassets/fonts/roboto-v15-latin-700.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/roboto-v15-latin-regular.woff",
+      "PackagePath": "staticwebassets/fonts/roboto-v15-latin-regular.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/roboto-v30-latin-300.woff",
+      "PackagePath": "staticwebassets/fonts/roboto-v30-latin-300.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/roboto-v30-latin-500.woff",
+      "PackagePath": "staticwebassets/fonts/roboto-v30-latin-500.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/roboto-v30-latin-700.woff",
+      "PackagePath": "staticwebassets/fonts/roboto-v30-latin-700.woff"
+    },
+    {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/fonts/roboto-v30-latin-regular.woff",
+      "PackagePath": "staticwebassets/fonts/roboto-v30-latin-regular.woff"
     },
     {
       "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/images/delete.png",

@@ -24,12 +24,8 @@ else
     <div class="form-field">
         <div class="form-field-label" for="lastNameInput">Type: </div>
         <div class="form-field-control">
-            <Select TValue="string" SelectedValue="@selectedType" SelectedValueChanged="@QuestionTypeChange">
-         	    @foreach (var id in types)
-         		{
-         			<SelectItem Value="@id">@id</SelectItem>
-         		}
-            </Select>
+            <RadzenDropDown AllowClear="false" TValue="string" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" 
+                            @bind-Value="selectedType" AllowFiltering="false" Class="w-100" Data=@types Change=@(args => QuestionTypeChange(args.ToString())) />
         </div>
     </div>
 

@@ -2,14 +2,29 @@
 
 <div class="form-field">
                 <div class="form-field-label" for="lastNameInput">QuestionID: </div>
-                <div class="form-field-control">
-                    <TextEdit cols="50" @bind-text="@question.QuestionLabel"/>
-                </div>
+    <div class="form-field-control">
+        <RadzenTextBox @bind-Value="@question.QuestionLabel" Class="w-100" />
+     
+    </div>
             </div>
             <div class="form-field">
                 <div class="form-field-label" for="lastNameInput">Prompt: </div>
                 <div class="form-field-control">
-                    <MemoEdit Rows="4" cols="50" @bind-text="@question.Prompt"/>
+            
+                      <RadzenHtmlEditor  @bind-Value=@question.Prompt style="height: 150px; width: 600px;" UploadUrl="upload/image" >
+                                       <RadzenHtmlEditorUndo />
+                                       <RadzenHtmlEditorRedo />
+                                       <RadzenHtmlEditorSeparator />
+                                       <RadzenHtmlEditorBold />
+                                       <RadzenHtmlEditorItalic />
+                                       <RadzenHtmlEditorUnderline />
+                                       <RadzenHtmlEditorSeparator />
+                                       <RadzenHtmlEditorOrderedList/>
+                                       <RadzenHtmlEditorUnorderedList/>
+                                       <RadzenHtmlEditorAlignLeft/>
+                                       <RadzenHtmlEditorAlignCenter/>
+                                       <RadzenHtmlEditorAlignRight/>
+                                   </RadzenHtmlEditor>
                 </div>
             </div>
 

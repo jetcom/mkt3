@@ -14,12 +14,14 @@
     <SourceRoot Include="/usr/local/share/dotnet/sdk/NuGetFallbackFolder/" />
   </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)radzen.blazor/4.6.6/buildTransitive/Radzen.Blazor.props" Condition="Exists('$(NuGetPackageRoot)radzen.blazor/4.6.6/buildTransitive/Radzen.Blazor.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore/7.0.2/buildTransitive/net6.0/Microsoft.EntityFrameworkCore.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore/7.0.2/buildTransitive/net6.0/Microsoft.EntityFrameworkCore.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore.design/7.0.2/build/net6.0/Microsoft.EntityFrameworkCore.Design.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore.design/7.0.2/build/net6.0/Microsoft.EntityFrameworkCore.Design.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.identity.ui/7.0.2/build/Microsoft.AspNetCore.Identity.UI.props" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.identity.ui/7.0.2/build/Microsoft.AspNetCore.Identity.UI.props')" />
-    <Import Project="$(NuGetPackageRoot)blazorise/1.1.6/buildTransitive/Blazorise.props" Condition="Exists('$(NuGetPackageRoot)blazorise/1.1.6/buildTransitive/Blazorise.props')" />
-    <Import Project="$(NuGetPackageRoot)blazorise.treeview/1.1.6/buildTransitive/Blazorise.TreeView.props" Condition="Exists('$(NuGetPackageRoot)blazorise.treeview/1.1.6/buildTransitive/Blazorise.TreeView.props')" />
-    <Import Project="$(NuGetPackageRoot)blazorise.bootstrap/1.1.6/buildTransitive/Blazorise.Bootstrap.props" Condition="Exists('$(NuGetPackageRoot)blazorise.bootstrap/1.1.6/buildTransitive/Blazorise.Bootstrap.props')" />
+    <Import Project="$(NuGetPackageRoot)blazorise/1.2.0/buildTransitive/Blazorise.props" Condition="Exists('$(NuGetPackageRoot)blazorise/1.2.0/buildTransitive/Blazorise.props')" />
+    <Import Project="$(NuGetPackageRoot)blazorise.treeview/1.2.0/buildTransitive/Blazorise.TreeView.props" Condition="Exists('$(NuGetPackageRoot)blazorise.treeview/1.2.0/buildTransitive/Blazorise.TreeView.props')" />
+    <Import Project="$(NuGetPackageRoot)blazorise.richtextedit/1.2.0/buildTransitive/Blazorise.RichTextEdit.props" Condition="Exists('$(NuGetPackageRoot)blazorise.richtextedit/1.2.0/buildTransitive/Blazorise.RichTextEdit.props')" />
+    <Import Project="$(NuGetPackageRoot)blazorise.bootstrap/1.2.0/buildTransitive/Blazorise.Bootstrap.props" Condition="Exists('$(NuGetPackageRoot)blazorise.bootstrap/1.2.0/buildTransitive/Blazorise.Bootstrap.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgMicrosoft_EntityFrameworkCore_Tools Condition=" '$(PkgMicrosoft_EntityFrameworkCore_Tools)' == '' ">/Users/jsb/.nuget/packages/microsoft.entityframeworkcore.tools/7.0.2</PkgMicrosoft_EntityFrameworkCore_Tools>

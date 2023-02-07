@@ -82,3 +82,13 @@
 /Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Blazorise.Icons.FontAwesome.dll
 /Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Npgsql.dll
 /Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Blazorise.RichTextEdit.dll
+/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Blazorise.Licensing.dll
+/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Microsoft.AspNetCore.Authorization.dll
+/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Microsoft.AspNetCore.Components.dll
+/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Microsoft.AspNetCore.Components.Forms.dll
+/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Microsoft.AspNetCore.Components.Web.dll
+/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Microsoft.AspNetCore.Metadata.dll
+/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Microsoft.JSInterop.dll
+/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/Radzen.Blazor.dll
+/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/bin/Debug/net7.0/System.Linq.Dynamic.Core.dll

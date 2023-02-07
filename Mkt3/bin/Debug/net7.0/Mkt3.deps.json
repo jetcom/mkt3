@@ -8,74 +8,99 @@
     ".NETCoreApp,Version=v7.0": {
       "Mkt3/1.0.0": {
         "dependencies": {
-          "Blazorise": "1.1.6",
-          "Blazorise.Bootstrap": "1.1.6",
-          "Blazorise.Icons.FontAwesome": "1.1.6",
-          "Blazorise.TreeView": "1.1.6",
+          "Blazorise": "1.2.0",
+          "Blazorise.Bootstrap": "1.2.0",
+          "Blazorise.Icons.FontAwesome": "1.2.0",
+          "Blazorise.RichTextEdit": "1.2.0",
+          "Blazorise.TreeView": "1.2.0",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "7.0.2",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.2",
           "Microsoft.AspNetCore.Identity.UI": "7.0.2",
           "Microsoft.EntityFrameworkCore.Design": "7.0.2",
           "Microsoft.EntityFrameworkCore.Sqlite": "7.0.2",
           "Microsoft.EntityFrameworkCore.Tools": "7.0.2",
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.1"
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.1",
+          "Radzen.Blazor": "4.6.6"
         },
         "runtime": {
           "Mkt3.dll": {}
         }
       },
-      "Blazorise/1.1.6": {
+      "Blazorise/1.2.0": {
         "dependencies": {
-          "Microsoft.AspNetCore.Components": "7.0.0",
-          "Microsoft.AspNetCore.Components.Web": "7.0.0",
+          "Blazorise.Licensing": "1.1.0",
+          "Microsoft.AspNetCore.Components": "7.0.2",
+          "Microsoft.AspNetCore.Components.Web": "7.0.2",
           "Microsoft.Extensions.Logging.Abstractions": "7.0.0"
         },
         "runtime": {
           "lib/net7.0/Blazorise.dll": {
-            "assemblyVersion": "1.1.6.0",
-            "fileVersion": "1.1.6.0"
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
           }
         }
       },
-      "Blazorise.Bootstrap/1.1.6": {
+      "Blazorise.Bootstrap/1.2.0": {
         "dependencies": {
-          "Blazorise": "1.1.6",
-          "Microsoft.AspNetCore.Components": "7.0.0",
-          "Microsoft.AspNetCore.Components.Web": "7.0.0",
+          "Blazorise": "1.2.0",
+          "Microsoft.AspNetCore.Components": "7.0.2",
+          "Microsoft.AspNetCore.Components.Web": "7.0.2",
           "Microsoft.Extensions.Logging.Abstractions": "7.0.0"
         },
         "runtime": {
           "lib/net7.0/Blazorise.Bootstrap.dll": {
-            "assemblyVersion": "1.1.6.0",
-            "fileVersion": "1.1.6.0"
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
           }
         }
       },
-      "Blazorise.Icons.FontAwesome/1.1.6": {
+      "Blazorise.Icons.FontAwesome/1.2.0": {
         "dependencies": {
-          "Blazorise": "1.1.6",
-          "Microsoft.AspNetCore.Components": "7.0.0",
-          "Microsoft.AspNetCore.Components.Web": "7.0.0",
+          "Blazorise": "1.2.0",
+          "Microsoft.AspNetCore.Components": "7.0.2",
+          "Microsoft.AspNetCore.Components.Web": "7.0.2",
           "Microsoft.Extensions.Logging.Abstractions": "7.0.0"
         },
         "runtime": {
           "lib/net7.0/Blazorise.Icons.FontAwesome.dll": {
-            "assemblyVersion": "1.1.6.0",
-            "fileVersion": "1.1.6.0"
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
           }
         }
       },
-      "Blazorise.TreeView/1.1.6": {
+      "Blazorise.Licensing/1.1.0": {
+        "runtime": {
+          "lib/net7.0/Blazorise.Licensing.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
+          }
+        }
+      },
+      "Blazorise.RichTextEdit/1.2.0": {
         "dependencies": {
-          "Blazorise": "1.1.6",
-          "Microsoft.AspNetCore.Components": "7.0.0",
-          "Microsoft.AspNetCore.Components.Web": "7.0.0",
+          "Blazorise": "1.2.0",
+          "Microsoft.AspNetCore.Components": "7.0.2",
+          "Microsoft.AspNetCore.Components.Web": "7.0.2",
+          "Microsoft.Extensions.Logging.Abstractions": "7.0.0"
+        },
+        "runtime": {
+          "lib/net7.0/Blazorise.RichTextEdit.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        }
+      },
+      "Blazorise.TreeView/1.2.0": {
+        "dependencies": {
+          "Blazorise": "1.2.0",
+          "Microsoft.AspNetCore.Components": "7.0.2",
+          "Microsoft.AspNetCore.Components.Web": "7.0.2",
           "Microsoft.Extensions.Logging.Abstractions": "7.0.0"
         },
         "runtime": {
           "lib/net7.0/Blazorise.TreeView.dll": {
-            "assemblyVersion": "1.1.6.0",
-            "fileVersion": "1.1.6.0"
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
           }
         }
       },
@@ -87,32 +112,57 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Authorization/7.0.0": {
+      "LibSassBuilder/2.0.1": {},
+      "Microsoft.AspNetCore.Authorization/7.0.2": {
         "dependencies": {
-          "Microsoft.AspNetCore.Metadata": "7.0.0",
+          "Microsoft.AspNetCore.Metadata": "7.0.2",
           "Microsoft.Extensions.Logging.Abstractions": "7.0.0",
           "Microsoft.Extensions.Options": "7.0.0"
+        },
+        "runtime": {
+          "lib/net7.0/Microsoft.AspNetCore.Authorization.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.222.60606"
+          }
         }
       },
-      "Microsoft.AspNetCore.Components/7.0.0": {
+      "Microsoft.AspNetCore.Components/7.0.2": {
         "dependencies": {
-          "Microsoft.AspNetCore.Authorization": "7.0.0",
-          "Microsoft.AspNetCore.Components.Analyzers": "7.0.0"
+          "Microsoft.AspNetCore.Authorization": "7.0.2",
+          "Microsoft.AspNetCore.Components.Analyzers": "7.0.2"
+        },
+        "runtime": {
+          "lib/net7.0/Microsoft.AspNetCore.Components.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.222.60606"
+          }
         }
       },
-      "Microsoft.AspNetCore.Components.Analyzers/7.0.0": {},
-      "Microsoft.AspNetCore.Components.Forms/7.0.0": {
+      "Microsoft.AspNetCore.Components.Analyzers/7.0.2": {},
+      "Microsoft.AspNetCore.Components.Forms/7.0.2": {
         "dependencies": {
-          "Microsoft.AspNetCore.Components": "7.0.0"
+          "Microsoft.AspNetCore.Components": "7.0.2"
+        },
+        "runtime": {
+          "lib/net7.0/Microsoft.AspNetCore.Components.Forms.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.222.60606"
+          }
         }
       },
-      "Microsoft.AspNetCore.Components.Web/7.0.0": {
+      "Microsoft.AspNetCore.Components.Web/7.0.2": {
         "dependencies": {
-          "Microsoft.AspNetCore.Components": "7.0.0",
-          "Microsoft.AspNetCore.Components.Forms": "7.0.0",
+          "Microsoft.AspNetCore.Components": "7.0.2",
+          "Microsoft.AspNetCore.Components.Forms": "7.0.2",
           "Microsoft.Extensions.DependencyInjection": "7.0.0",
-          "Microsoft.JSInterop": "7.0.0",
+          "Microsoft.JSInterop": "7.0.2",
           "System.IO.Pipelines": "7.0.0"
+        },
+        "runtime": {
+          "lib/net7.0/Microsoft.AspNetCore.Components.Web.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.222.60606"
+          }
         }
       },
       "Microsoft.AspNetCore.Cryptography.Internal/7.0.2": {
@@ -169,7 +219,15 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Metadata/7.0.0": {},
+      "Microsoft.AspNetCore.Metadata/7.0.2": {
+        "runtime": {
+          "lib/net7.0/Microsoft.AspNetCore.Metadata.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.222.60606"
+          }
+        }
+      },
+      "Microsoft.CSharp/4.7.0": {},
       "Microsoft.Data.Sqlite.Core/7.0.2": {
         "dependencies": {
           "SQLitePCLRaw.core": "2.1.2"
@@ -350,7 +408,14 @@
         }
       },
       "Microsoft.Extensions.Primitives/7.0.0": {},
-      "Microsoft.JSInterop/7.0.0": {},
+      "Microsoft.JSInterop/7.0.2": {
+        "runtime": {
+          "lib/net7.0/Microsoft.JSInterop.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.222.60606"
+          }
+        }
+      },
       "Mono.TextTemplating/2.2.1": {
         "dependencies": {
           "System.CodeDom": "4.4.0"
@@ -384,6 +449,21 @@
           "lib/net7.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
             "assemblyVersion": "7.0.1.0",
             "fileVersion": "7.0.1.0"
+          }
+        }
+      },
+      "Radzen.Blazor/4.6.6": {
+        "dependencies": {
+          "LibSassBuilder": "2.0.1",
+          "Microsoft.AspNetCore.Components": "7.0.2",
+          "Microsoft.AspNetCore.Components.Web": "7.0.2",
+          "Microsoft.CSharp": "4.7.0",
+          "System.Linq.Dynamic.Core": "1.2.22"
+        },
+        "runtime": {
+          "lib/net7.0/Radzen.Blazor.dll": {
+            "assemblyVersion": "4.6.6.0",
+            "fileVersion": "4.6.6.0"
           }
         }
       },
@@ -544,6 +624,14 @@
         }
       },
       "System.IO.Pipelines/7.0.0": {},
+      "System.Linq.Dynamic.Core/1.2.22": {
+        "runtime": {
+          "lib/net6.0/System.Linq.Dynamic.Core.dll": {
+            "assemblyVersion": "1.2.22.0",
+            "fileVersion": "1.2.22.0"
+          }
+        }
+      },
       "System.Memory/4.5.3": {},
       "System.Text.Encodings.Web/7.0.0": {},
       "System.Text.Json/7.0.0": {
@@ -559,33 +647,47 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Blazorise/1.1.6": {
+    "Blazorise/1.2.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-3DjOrI7J4MDsGeTYKgeA2P9wWk36zi4Fxf+zbRHRvztwPu9rLbWeI1oBzKq2eDDRNDirKbc+IGbccwxrblXM3A==",
-      "path": "blazorise/1.1.6",
-      "hashPath": "blazorise.1.1.6.nupkg.sha512"
+      "sha512": "sha512-z6r1rRSwT508I5S4IeVFl5bs7aefOF8QnyeaFhSSdWVd9lem6KnIsNUrGgRK6V6VSlb7VO7MVeVnst//t4JaYQ==",
+      "path": "blazorise/1.2.0",
+      "hashPath": "blazorise.1.2.0.nupkg.sha512"
     },
-    "Blazorise.Bootstrap/1.1.6": {
+    "Blazorise.Bootstrap/1.2.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-bJVvDJr7GSI0MIXkLPBoE1OEI8mVRaWtcIk9t9tva/hktv2mrXjq7P/ovV1OsbRYlVpyPPVE6HB+fN/5CMUhsg==",
-      "path": "blazorise.bootstrap/1.1.6",
-      "hashPath": "blazorise.bootstrap.1.1.6.nupkg.sha512"
+      "sha512": "sha512-FtpamnQqNc4zB8u1CuTAortrEov3XG1FZzRhfYkFZ7MhHmc4WffDKCHwzVOsjS4Ejc8gJxuClCfBQSwjexTlxQ==",
+      "path": "blazorise.bootstrap/1.2.0",
+      "hashPath": "blazorise.bootstrap.1.2.0.nupkg.sha512"
     },
-    "Blazorise.Icons.FontAwesome/1.1.6": {
+    "Blazorise.Icons.FontAwesome/1.2.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-bjUvnOa1Dj1idyyPLIcqqgsbLhkPy/zv5PXWsFOItgBuy8tQbWsmtJISf37MteSVSt6P6gac0whthv/X85ANVw==",
-      "path": "blazorise.icons.fontawesome/1.1.6",
-      "hashPath": "blazorise.icons.fontawesome.1.1.6.nupkg.sha512"
+      "sha512": "sha512-PFfKaGopvP0RYOs2LVWdvQ8azquHQUHlAjYgsH0j9LFRenKqlPBstDn+dMKW2UvGiVMqq80MgLTcO745SDT7Vw==",
+      "path": "blazorise.icons.fontawesome/1.2.0",
+      "hashPath": "blazorise.icons.fontawesome.1.2.0.nupkg.sha512"
     },
-    "Blazorise.TreeView/1.1.6": {
+    "Blazorise.Licensing/1.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-VT9by6yeBxt2nG2IPRrAxZS77zWW2V0vEjfUU1bsKi/QpeOVuKdgYeMBx1GbGRBYU76RRCjgOiefl54c8cdp8g==",
-      "path": "blazorise.treeview/1.1.6",
-      "hashPath": "blazorise.treeview.1.1.6.nupkg.sha512"
+      "sha512": "sha512-QDHl4m8ixmq+xIsW3d0kHBpJYJPqMBzbNCFhtEsqSrmrAPMEmSVm6r9pprkgT51leeqvkPxuy22Osiql48KgDQ==",
+      "path": "blazorise.licensing/1.1.0",
+      "hashPath": "blazorise.licensing.1.1.0.nupkg.sha512"
+    },
+    "Blazorise.RichTextEdit/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yaHaI6gyiL99QMY/xi2LUEE8WfNdVpr+c5t0R+noOWcFbdiYSKaDFIS6FRft5JcJf3NN1eqB/r80tzRv1X6alA==",
+      "path": "blazorise.richtextedit/1.2.0",
+      "hashPath": "blazorise.richtextedit.1.2.0.nupkg.sha512"
+    },
+    "Blazorise.TreeView/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Y35lhxeads2TY8+t3UmFUKcjwlliZPWqcB7yjqG3eHH3gaZGY1bVs0WNVzU2pQkrlgv2LQiWV1j3tm2d5lAtZQ==",
+      "path": "blazorise.treeview/1.2.0",
+      "hashPath": "blazorise.treeview.1.2.0.nupkg.sha512"
     },
     "Humanizer.Core/2.14.1": {
       "type": "package",
@@ -594,40 +696,47 @@
       "path": "humanizer.core/2.14.1",
       "hashPath": "humanizer.core.2.14.1.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Authorization/7.0.0": {
+    "LibSassBuilder/2.0.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-0O7C7XHj+17Q0geMpnpRC0fnnALH2Yhaa2SAzX00OkeF2NZ/+zWoDymbSnepg1qhueufUivihZiVGtMeq5Zywg==",
-      "path": "microsoft.aspnetcore.authorization/7.0.0",
-      "hashPath": "microsoft.aspnetcore.authorization.7.0.0.nupkg.sha512"
+      "sha512": "sha512-f+7TWQtCirW94VdzKL9SaAfeSF96TeEqdtDztmTGbndrcUlZZlL6uJLZKQCXQgj1BB3OqX0584OCvqFHrkAusA==",
+      "path": "libsassbuilder/2.0.1",
+      "hashPath": "libsassbuilder.2.0.1.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Components/7.0.0": {
+    "Microsoft.AspNetCore.Authorization/7.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-8bz6m5cb5VJTftEbfMCLTcoH9+5tTAX8AuOf9z7Q86joRBkkkKYNrEozhZhZwjOStVbQIQzsYJZQQETaVALNQQ==",
-      "path": "microsoft.aspnetcore.components/7.0.0",
-      "hashPath": "microsoft.aspnetcore.components.7.0.0.nupkg.sha512"
+      "sha512": "sha512-ukMX3a48GkpxeWHHeNby5kUQgsiedPVUMX1nBgswBciWczzM2G1WpRuqu2HTEaFFkMIPPhkA0pRL30d5upTTIw==",
+      "path": "microsoft.aspnetcore.authorization/7.0.2",
+      "hashPath": "microsoft.aspnetcore.authorization.7.0.2.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Components.Analyzers/7.0.0": {
+    "Microsoft.AspNetCore.Components/7.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-UIxDb79WhKacD2L3+h+iVjwMmj46bCNsikizqIgffpqZnB0WwtJJ17jxcqXcjp/oVkcRjzoEleaMEE5ysX4tvg==",
-      "path": "microsoft.aspnetcore.components.analyzers/7.0.0",
-      "hashPath": "microsoft.aspnetcore.components.analyzers.7.0.0.nupkg.sha512"
+      "sha512": "sha512-qNQtkpwbZLipWJuWFlXO51FfhvUGLMeCFu67XyJI9TlfwenZbHP5fgxXNltTESRL+vO/57pysC+kzhOh8R1CVw==",
+      "path": "microsoft.aspnetcore.components/7.0.2",
+      "hashPath": "microsoft.aspnetcore.components.7.0.2.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Components.Forms/7.0.0": {
+    "Microsoft.AspNetCore.Components.Analyzers/7.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-xmcICgXAkrCQ3d4cNgD5YxtFqTPvnOl0hS7orIIziWZ3OQLAYFDpDhpITbK13iRSqsN5GXpxgzHIrAIr2ail8A==",
-      "path": "microsoft.aspnetcore.components.forms/7.0.0",
-      "hashPath": "microsoft.aspnetcore.components.forms.7.0.0.nupkg.sha512"
+      "sha512": "sha512-6cJq49gv/MPR81yX/8Kw9f3M5s2G34SkxHdfHaqSEqOkW/g8gWzHIt6wd1n8b0wpZlaw5dEVTC0PQCNMBFJOmw==",
+      "path": "microsoft.aspnetcore.components.analyzers/7.0.2",
+      "hashPath": "microsoft.aspnetcore.components.analyzers.7.0.2.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Components.Web/7.0.0": {
+    "Microsoft.AspNetCore.Components.Forms/7.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-UkwVMsRozkcKl18Qjc8jyXM/L+ehRMqDblkCGgheGU0WC/EB/yfw/cwTEbiAeztgfVlSpC6a19Zm75U+ie+RCw==",
-      "path": "microsoft.aspnetcore.components.web/7.0.0",
-      "hashPath": "microsoft.aspnetcore.components.web.7.0.0.nupkg.sha512"
+      "sha512": "sha512-N5ZZVSUD+U3PY835QywNWc/7tEJzDoms+0nxkO3TqSNl6xFi5dW+DJGSDmLaiX4SwQwz8StWheeBdnk5A0Ad4Q==",
+      "path": "microsoft.aspnetcore.components.forms/7.0.2",
+      "hashPath": "microsoft.aspnetcore.components.forms.7.0.2.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Components.Web/7.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dcag82ptRuChEIE1ie+6S9dTQpYEcHYRRjErurhiJRcUhX6+UjPVLDj+VYlkASx6qg+rdO4gNaPZbokH1qjtIg==",
+      "path": "microsoft.aspnetcore.components.web/7.0.2",
+      "hashPath": "microsoft.aspnetcore.components.web.7.0.2.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Cryptography.Internal/7.0.2": {
       "type": "package",
@@ -664,12 +773,19 @@
       "path": "microsoft.aspnetcore.identity.ui/7.0.2",
       "hashPath": "microsoft.aspnetcore.identity.ui.7.0.2.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Metadata/7.0.0": {
+    "Microsoft.AspNetCore.Metadata/7.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ut2azlKz7BQpCKu6AiwKEjMHpRWoD4qu2Ff/n6KagjFsyDAfZY7lgYJ158vr4O0jXet6pV1uF1q3jmXvki0OlA==",
-      "path": "microsoft.aspnetcore.metadata/7.0.0",
-      "hashPath": "microsoft.aspnetcore.metadata.7.0.0.nupkg.sha512"
+      "sha512": "sha512-N/4IWVUy9GSjqT3rRHy43bXEpU5fjEuXj34/YEQdjDXdPhV+7woSsR/SkE/DVUpiU/46jW0S1hx3UHEyhEWf8A==",
+      "path": "microsoft.aspnetcore.metadata/7.0.2",
+      "hashPath": "microsoft.aspnetcore.metadata.7.0.2.nupkg.sha512"
+    },
+    "Microsoft.CSharp/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
+      "path": "microsoft.csharp/4.7.0",
+      "hashPath": "microsoft.csharp.4.7.0.nupkg.sha512"
     },
     "Microsoft.Data.Sqlite.Core/7.0.2": {
       "type": "package",
@@ -832,12 +948,12 @@
       "path": "microsoft.extensions.primitives/7.0.0",
       "hashPath": "microsoft.extensions.primitives.7.0.0.nupkg.sha512"
     },
-    "Microsoft.JSInterop/7.0.0": {
+    "Microsoft.JSInterop/7.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-C9diwCnaWZ7PH3zOyf2zgcwFEqbSU11DzCnUPXCf5cqXMFeZDrEDP+M74TiCURKJ5vxImRvMtD7RiHYCtkxoXw==",
-      "path": "microsoft.jsinterop/7.0.0",
-      "hashPath": "microsoft.jsinterop.7.0.0.nupkg.sha512"
+      "sha512": "sha512-pL76xs13qA9n1xdUEs0W+9N979RfMC5nP4ZKoQrUwvRVHCBgtDdYiTN72tbmkvQQeIU3p8qioLJk5zIEK0BXKw==",
+      "path": "microsoft.jsinterop/7.0.2",
+      "hashPath": "microsoft.jsinterop.7.0.2.nupkg.sha512"
     },
     "Mono.TextTemplating/2.2.1": {
       "type": "package",
@@ -859,6 +975,13 @@
       "sha512": "sha512-8txq2CsPWvWO4azZSBmKLKmYsL6dkGrarX2hJZY0Djx6uWZJGH9W0OTE1oHqn+aC5L+xrzyS+TM3kiKw2gdXuA==",
       "path": "npgsql.entityframeworkcore.postgresql/7.0.1",
       "hashPath": "npgsql.entityframeworkcore.postgresql.7.0.1.nupkg.sha512"
+    },
+    "Radzen.Blazor/4.6.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZRJkn3/40ntrBGvCOLvEqr3zWpOgcxHvR4hmGuYKZu7WLuZcMxEMkmuTn681PCzmeuzrM//lLu8gkXuKJqVAOw==",
+      "path": "radzen.blazor/4.6.6",
+      "hashPath": "radzen.blazor.4.6.6.nupkg.sha512"
     },
     "SQLitePCLRaw.bundle_e_sqlite3/2.1.2": {
       "type": "package",
@@ -901,6 +1024,13 @@
       "sha512": "sha512-jRn6JYnNPW6xgQazROBLSfpdoczRw694vO5kKvMcNnpXuolEixUyw6IBuBs2Y2mlSX/LdLvyyWmfXhaI3ND1Yg==",
       "path": "system.io.pipelines/7.0.0",
       "hashPath": "system.io.pipelines.7.0.0.nupkg.sha512"
+    },
+    "System.Linq.Dynamic.Core/1.2.22": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PB57h0KkIvCF1X/x7iZZKdgiQSo/5geNrConfaw4KEsbyX25MuAEcLOc5RF5GNycSfC7qwaL4L8Mm6b8uMmcAw==",
+      "path": "system.linq.dynamic.core/1.2.22",
+      "hashPath": "system.linq.dynamic.core.1.2.22.nupkg.sha512"
     },
     "System.Memory/4.5.3": {
       "type": "package",

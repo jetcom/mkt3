@@ -6,31 +6,96 @@
 
 
 <div class="navHeader">
-    <img src="images/new.png" width="24px"/>
-    <img src="images/folder.png" width="24px"/>
+    <div style="display: inline">
+    <img src="images/new.png"  width="24px"/>
+    <img src="images/folder.png" onclick="@ShowNewFolderModal" width="24px"/>
     <img src="images/upload.png" width="24px"/>
-    <span style="padding-left: 95px">
+    </div>
+    <div style="float: right">
         <img src="images/rename.png" width="24px"/>
-        <img src="images/delete.png" width="24px"/>       
-    </span>
-</div>
-<div style="padding-top:5px;">
-<TreeView Nodes="Items"
-          GetChildNodes="@(item => item.Children)"
-          HasChildNodes="@(item => item.Children?.Any() == true)"
-          TNode="Item"
-          SelectedNode="SelectedNode"
-          SelectedNodeChanged="onSelectedNodeChanged">
-      
-    <NodeContent>@context.Text</NodeContent>
-</TreeView>
+        <img src="images/delete.png" width="24px"/>
+    </div>
+
 </div>
 
+<div>
+    <Layout Sider>
+       <LayoutSider>
+           <LayoutSiderContent>
+               <Bar Mode="BarMode.VerticalInline" CollapseMode="BarCollapseMode.Small"
+                    Breakpoint="Breakpoint.Desktop"
+                    Background="Background.Dark"
+                    ThemeContrast="ThemeContrast.Dark">
+                   <!--<BarBrand>
+                       <BarItem>
+                           <BarLink To="#">
+                               <BarIcon IconName="IconName.Dashboard" />
+                               Example
+                           </BarLink>
+                       </BarItem>
+                   </BarBrand>-->
+                   <BarMenu>
+                       <BarStart>
+                           @{
+                               foreach (var parent in Items)
+                               {
+                                   <BarItem>
+                                       <BarDropdown RightAligned>
+                                           <BarDropdownToggle>
+                                               <BarIcon IconName="IconName.Folder"/>
+                                               @parent.Text
+                                           </BarDropdownToggle>
+                                           <BarDropdownMenu>
+                                               @{
+                                                   foreach (var c in parent.Children)
+                                                   {
+                                                       var q = "/questionList/" + c.TopicID;
+                                                       <BarDropdownItem onclick="@setCurrentItem(c.Parent, c.TopicID)" href="@q">@c.Text</BarDropdownItem>
+                                                   }
+                                               }
+                                               </BarDropdownMenu>
+                                       </BarDropdown>
+                                   </BarItem>
+                               }
+                           }
+                           </BarStart>
+                   </BarMenu>
+               </Bar>
+           </LayoutSiderContent>
+       </LayoutSider>
+   </Layout>
+</div>
+<Modal @ref="newFolderRef">
+    <ModalContent Centered>
+       
+        <ModalBody>
+            <Alert @ref="myAlert" Color="Color.Info">
+                <AlertDescription>Please select a unique folder name</AlertDescription>
+            </Alert>
+            <Field>
+                <FieldLabel>Folder Name: </FieldLabel>
+                <TextEdit @bind-Text="newFolderName" Placeholder="Enter new folder name..."/>
+            </Field>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="@HideNewFolderModal">Close</Button>
+            <Button Color="Color.Primary" Clicked="@SaveNewFolderModal">Save</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
 
 @code {
+    Alert myAlert;
+    private Modal newFolderRef;
+
+
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    
+    private string newFolderName { get; set; }
+    
+    public string currentFolder { get; set; }
 
     private void ToggleNavMenu()
     {
@@ -43,7 +108,7 @@
         public string Text { get; set; }
         public int TopicID { get; set; }
         
-        public IEnumerable<Item> Children { get; set; }
+        public List<Item> Children { get; set; }
       
     }
     List<Item> Items = new();
@@ -60,18 +125,45 @@
   
     }
     
-    
-    
-    
-    public void onSelectedNodeChanged(Item item)
+    private Task ShowNewFolderModal()
     {
-        if (item != null)
-        {
-            StateHasChanged();
-            Navigation.NavigateTo("/questionList/" + item.TopicID);
-        }
+        return newFolderRef.Show();
     }
 
+    private Task HideNewFolderModal()
+    {
+        myAlert.Hide();
+        return newFolderRef.Hide();
+    }
+
+    private Task SaveNewFolderModal()
+    {
+        var topics = QuestionService.GetAllCoursess();
+        if (topics.Contains(newFolderName))
+        {
+            
+            return myAlert.Show();
+        }
+        else
+        {
+            myAlert.Hide();
+            QuestionService.AddTopic(newFolderName);
+            newFolderName = "";
+            UpdateTree();
+            return newFolderRef.Hide();
+        }
+  
+    }
+    
+
+    private bool setCurrentItem(string Parent, int topicID)
+    {
+        currentFolder = Parent;
+        return true;
+    }
+    
+    
+  
 
     private async void OnTopicChanged()
     {
@@ -89,18 +181,37 @@
     private async void UpdateTree()
     {
         var allTopics = await QuestionService.GetTopics();
-        foreach (var item in Items)
+        var currentItems = Items.Select(i => i.Text).ToList();
+        Item currentItem = null;
+        foreach (var topic in allTopics)
         {
-            foreach (var child in item.Children)
+            if (currentItems.Contains(topic.Course))
             {
-                var topic = allTopics.Find(t => t.ID == child.TopicID);
-                child.Text = topic.Name;
+                currentItem = Items.First(i => i.Text == topic.Course);
+
+                var children = currentItem.Children;
+                Item currentChild = null;
+                
+                currentItem.Children = allTopics.FindAll(e => e.Course == topic.Course).OrderBy(e => e.Name).Select(child => new Item() { Parent = topic.Course, Text = child.Name, TopicID = child.ID }).ToList();
+
+            }
+            else
+            {
+                var pos = 0;
+                if (currentItem != null)
+                {
+                    pos = Items.IndexOf(currentItem)+1;
+                }
+                var children = allTopics.FindAll(e => e.Course == topic.Course).OrderBy(e => e.Name).Select(child => new Item() { Parent = topic.Course, Text = child.Name, TopicID = child.ID }).ToList();
+
+                Items.Insert(pos, new Item() { Text = topic.Course, Children = children });
             }
 
         }
+
         StateHasChanged();
     }
-    
-  
+
+
 
 }

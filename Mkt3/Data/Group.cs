@@ -12,6 +12,13 @@ public class Group
     public int Points { get; set; }
     public int? MaxQuestions { get; set; }
 
+    public string IDs
+    {
+        get
+        {
+            return ID.ToString();
+        }
+    }
 
     public object Clone()
     {

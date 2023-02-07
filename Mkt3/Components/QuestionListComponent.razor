@@ -8,76 +8,23 @@
 <h3 hidden="@editTitle">@topic.Name <img onclick="@doEdit" width="24px" src="images/pencil.png"/></h3>
 <input class="titleEdit" hidden="@(!editTitle)" id="nameEditBox"  type="text" width="30" value="@topic.Name" @onchange="@TopicChange"/>
 
+ <RadzenDataGrid AllowFiltering="true" AllowColumnResize="false" AllowAlternatingRows="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="10" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                 Data="@questions" TItem="Question" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or"
+                 RowSelect="Callback" SelectionMode="DataGridSelectionMode.Single">
+ <Columns>
+     <RadzenDataGridColumn TItem="Question" Property="Prompt" Filterable="true" Title="Prompt" Sortable="true"  Width="400px" TextAlign="TextAlign.Left" />
+     <RadzenDataGridColumn TItem="Question" Property="type"  Title="Type" Sortable="true" Filterable="true" Width="100px" TextAlign="TextAlign.Center" />
+         
+     <RadzenDataGridColumn TItem="Question" Property="Group" Title="Group" Sortable="true" Filterable="true"  Width="100px" />
+     <RadzenDataGridColumn TItem="Question" Width="80px" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" >
+         <Template Context="data">
+             <RadzenButton ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Shade="Shade.Darker" Icon="delete" Class="m-1" Click=@(() => Delete(data)) Text="Delete"/>
+         </Template>
+     </RadzenDataGridColumn>
+ </Columns>
+ </RadzenDataGrid>
 
-<table class="table table-dark table-striped">
-     <TableHeader>
-    <TableRow>
-        <AuthorizeView>
-            <Authorized>
-                <th></th>
-            </Authorized>
-        </AuthorizeView>
-        <TableHeaderCell>
-            <span @onclick="@(async () => await sortAsync("Title"))"><img width="12" src="@imageSortName"/>Question
-            </span> </TableHeaderCell>
-        <TableHeaderCell style="width: 150px">
-            <span @onclick="@(async () => await sortAsync("Type"))"><img width="12" src="@imageSortName"/>Type
-            </span> </TableHeaderCell>
-         <TableHeaderCell style="width: 150px">
-                <span @onclick="@(async () => await sortAsync("Group"))"><img width="12" src="@imageSortName"/>Group
-                </span> </TableHeaderCell>
-        <TableHeaderCell style="width:10px;">
-            
-           
-                
-            </TableHeaderCell>
-
-    </TableRow>
-    </TableHeader>
-    <TableBody>
-    @foreach (var question in questions)
-    {
-        <TableRow>
-            <AuthorizeView>
-                <Authorized>
-                   <!-- <td><a href="/editRepeater/@question.QuestionLabel"> <img width="12" src="@imageEditName"/></a></td>-->
-                </Authorized>
-            </AuthorizeView>
-       
-            <TableRowCell><a href="/editQuestion/@TopicID/@question.ID">@question.Prompt</a>
-                @{/*
-                  foreach (var tag in question.ExamTags)
-                  {
-                      <button class="tag">@tag</button>
-                      <button class="tag-remove">X</button>
-                  }
-               */
-                }
-            </TableRowCell>
-      
-            <TableRowCell>@question.type</TableRowCell>
-              <TableRowCell>
-                  @{
-                      
-                    if (question.GroupID != null && question.GroupID != 0)
-                    {
-                            var group = QuestionService.GetGroup(question.GroupID);
-
-                        if (group != null)
-                        {
-                            <span>@group.Name</span>
-                        }
-                    }
-                }</TableRowCell>
-            
-            <TableRowCell><button type="button" class="buttons buttons-red" @onclick="@(async () => await Delete(question))">Delete</button>   </TableRowCell>
-
-
-        </TableRow>
-    }
-    </TableBody>
-</table>
-
+<br/>
 <a href="/editQuestion/add/@TopicID" class="buttons">Add</a>    
 @code {
 
@@ -94,10 +41,9 @@
     public EventCallback onTopicChangedCallBack { get; set; }
     
     private List<Question> questions { get; set; }
-    private string currentSort =  "RFreq";
-    private string currentOrder = "asc";
-    private string imageSortName = "images/sort-asc-white.png";
-    private string imageEditName = "images/edit-white.png";
+
+    private Question currentQuestion { get; set; }
+    
     private Topic topic;
     private bool editTitle { get; set; }
 
@@ -138,19 +84,7 @@
         
     }
     
-    private Task sortAsync(string sortData)
-    {
-        
-        if (currentSort == sortData)
-        {
-            currentOrder = currentOrder == "asc" ? "desc" : "asc";
-            imageSortName = "images/sort-" + currentOrder + "-white.png";
-        }
-        currentSort = sortData;
-        
-        //questions = questions.AsQueryable().OrderBy(sortData + " "+ currentOrder).ToArray();
-        return Task.FromResult(true);
-    }
+
 
     private void Add()
     {
@@ -168,7 +102,11 @@
         Refresh();
 
     }
-    
- 
+
+
+    private void Callback(Question q)
+    {
+        NavigationManager.NavigateTo("editQuestion/"+TopicID+"/"+q.ID);
+    }
 
 }
