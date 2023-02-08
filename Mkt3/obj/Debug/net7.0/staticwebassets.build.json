@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Ysyrj0Yi4CdvmSzgV3lxXKGOJx5om60jfCF9veTeeAU=",
+  "Hash": "1R+z33x+P7JiZv7DjuPsPKLb67j2ioH+uQ+dHOy0skU=",
   "Source": "Mkt3",
   "BasePath": "_content/Mkt3",
   "Mode": "Default",
@@ -2412,6 +2412,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/css/custom.styles.css"
+    },
+    {
+      "Identity": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/css/fluent-base.css",
+      "SourceId": "Mkt3",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/",
+      "BasePath": "_content/Mkt3",
+      "RelativePath": "css/fluent-base.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/fluent-base.css"
     },
     {
       "Identity": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/css/material-dark-base.css",

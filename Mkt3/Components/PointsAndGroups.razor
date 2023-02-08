@@ -2,6 +2,7 @@
 @using Mono.TextTemplating
 @using Blazorise.Extensions
 
+@using Group = Mkt3.Data.Group
 @inject QuestionService QuestionService;
 
 <div class="form-field">
@@ -17,7 +18,7 @@
         </div>
         <div style="display: inline; float: left">
              <RadzenDropDown AllowClear="true" TValue="int" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowFiltering="true" Class="w-100" 
-                             Placeholder="No Group" @bind-Value="@selectedGroup" Data=@QuestionService.GetAllGroups(TopicID) TextProperty="Name" ValueProperty="ID" 
+                             Placeholder="No Group" @bind-Value="@selectedGroup" Data="@sessionGroups" TextProperty="Name" ValueProperty="ID" 
                              Change="GroupChange" />
                         
                 @{
@@ -78,12 +79,17 @@
     [Parameter]
     public string TopicID { get; set; }
 
+    [Parameter]
+    public string userID { get; set; }
+
     private bool pointsDisabled { get; set; }
     private string selGroup { get; set; }
     private int selectedGroup { get; set; }
     private int oldSelectedGroup { get; set; }
     private string currentGroupName { get; set; }
     private string currentGroupPoints { get; set; }
+    
+    private List<Group> sessionGroups { get; set; }
         
     private Modal modalRef;
 
@@ -100,7 +106,7 @@
     {
         if (selectedGroup != -1)
         {
-            var currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup));
+            var currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup), userID);
             currentGroupName = currentGroup.Name;
             currentGroupPoints = currentGroup.Points.ToString();
         }
@@ -110,10 +116,11 @@
 
     protected override async Task OnInitializedAsync()
     {
+        sessionGroups = QuestionService.GetAllGroups(TopicID, userID);
         setGroup(question.GroupID);
         if (selectedGroup != null && selectedGroup != 0)
         {
-            var currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup));
+            var currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup), userID);
             currentGroupName = currentGroup.Name;
             currentGroupPoints = currentGroup.Points.ToString();
         }
@@ -122,7 +129,7 @@
     
     private async Task<Task> DeleteGroup()
     {
-        var currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup));
+        var currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup), userID);
         QuestionService.DeleteGroup(currentGroup);
         selectedGroup = 0;
         return modalRef.Hide();
@@ -131,16 +138,18 @@
 
     private async Task<Task> SaveGroupChanges()
     {
-        var currentGroup = new Data.Group();
+        var currentGroup = new Data.Group(userID);
         if (selectedGroup != -1)
         {
-            currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup));
+            currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup), userID);
         }
         
         currentGroup.Name = currentGroupName;
         currentGroup.Points = Convert.ToInt32(currentGroupPoints);
         currentGroup.TopicID = Convert.ToInt32(TopicID);
-        selectedGroup = (await QuestionService.UpdateGroup(currentGroup));
+        var r = await QuestionService.UpdateGroup(currentGroup);
+        sessionGroups = QuestionService.GetAllGroups(TopicID, userID);
+        selectedGroup = r;
    
         return modalRef.Hide();
     }
@@ -171,7 +180,7 @@
         }
         else
         {
-            var group = QuestionService.GetGroup(Convert.ToInt32(selected));
+            var group = QuestionService.GetGroup(Convert.ToInt32(selected), userID);
             if (group == null)
             {
                 selected = 0;

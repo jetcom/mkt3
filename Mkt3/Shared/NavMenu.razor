@@ -5,6 +5,7 @@
 @inject CurrentNav currentNav
 
 
+<AuthorizeView>
 <div class="navHeader">
     <div style="display: inline">
     <img src="images/new.png"  width="24px"/>
@@ -19,52 +20,24 @@
 </div>
 
 <div>
-    <Layout Sider>
-       <LayoutSider>
-           <LayoutSiderContent>
-               <Bar Mode="BarMode.VerticalInline" CollapseMode="BarCollapseMode.Small"
-                    Breakpoint="Breakpoint.Desktop"
-                    Background="Background.Dark"
-                    ThemeContrast="ThemeContrast.Dark">
-                   <!--<BarBrand>
-                       <BarItem>
-                           <BarLink To="#">
-                               <BarIcon IconName="IconName.Dashboard" />
-                               Example
-                           </BarLink>
-                       </BarItem>
-                   </BarBrand>-->
-                   <BarMenu>
-                       <BarStart>
-                           @{
-                               foreach (var parent in Items)
-                               {
-                                   <BarItem>
-                                       <BarDropdown RightAligned>
-                                           <BarDropdownToggle>
-                                               <BarIcon IconName="IconName.Folder"/>
-                                               @parent.Text
-                                           </BarDropdownToggle>
-                                           <BarDropdownMenu>
-                                               @{
-                                                   foreach (var c in parent.Children)
-                                                   {
-                                                       var q = "/questionList/" + c.TopicID;
-                                                       <BarDropdownItem onclick="@setCurrentItem(c.Parent, c.TopicID)" href="@q">@c.Text</BarDropdownItem>
-                                                   }
-                                               }
-                                               </BarDropdownMenu>
-                                       </BarDropdown>
-                                   </BarItem>
-                               }
-                           }
-                           </BarStart>
-                   </BarMenu>
-               </Bar>
-           </LayoutSiderContent>
-       </LayoutSider>
-   </Layout>
+    <RadzenPanelMenu Style="width:250px;" Multiple="true">
+        @{
+            foreach (var parent in Items)
+            {
+                <RadzenPanelMenuItem  Icon="folder" Text="@parent.Text">
+                    @foreach (var c in parent.Children)
+                    {
+                        var q = "/questionList/" + c.TopicID;
+                        <RadzenPanelMenuItem Text="@c.Text" Path="@q" />
+            
+                    }
+                </RadzenPanelMenuItem>
+            }
+        }
+    </RadzenPanelMenu>
+   
 </div>
+</AuthorizeView>
 <Modal @ref="newFolderRef">
     <ModalContent Centered>
        
@@ -85,6 +58,9 @@
 </Modal>
 
 @code {
+    [CascadingParameter(Name="userID")]
+    private string userID { get; set; }
+    
     Alert myAlert;
     private Modal newFolderRef;
 
@@ -96,7 +72,8 @@
     private string newFolderName { get; set; }
     
     public string currentFolder { get; set; }
-
+    
+ 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
@@ -119,7 +96,7 @@
     
     protected override async Task OnInitializedAsync()
     {
-  
+        
         OnTopicChanged();
         currentNav.onChange += () => UpdateTree();
   
@@ -136,9 +113,9 @@
         return newFolderRef.Hide();
     }
 
-    private Task SaveNewFolderModal()
+    private  Task SaveNewFolderModal()
     {
-        var topics = QuestionService.GetAllCoursess();
+        var topics = QuestionService.GetTopics(userID).Result.Select(t=>t.Course);
         if (topics.Contains(newFolderName))
         {
             
@@ -167,7 +144,7 @@
 
     private async void OnTopicChanged()
     {
-        var allTopics = await QuestionService.GetTopics();
+        var allTopics = await QuestionService.GetTopics(userID);
 
         foreach (var topic in  allTopics.DistinctBy(e => e.Course))
         {
@@ -180,7 +157,7 @@
 
     private async void UpdateTree()
     {
-        var allTopics = await QuestionService.GetTopics();
+        var allTopics = await QuestionService.GetTopics(userID);
         var currentItems = Items.Select(i => i.Text).ToList();
         Item currentItem = null;
         foreach (var topic in allTopics)

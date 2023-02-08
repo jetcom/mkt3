@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mkt3.Data;
@@ -21,6 +23,11 @@ public class Mkt3Context: DbContext
             .HasKey(nameof(Exam.examID), nameof(Exam.courseNumber));
         modelBuilder.Entity<QuestionTopic>()
             .HasKey(nameof(QuestionTopic.QuestionID), nameof(QuestionTopic.TopicID));
+    }
+    
+    public Mkt3Context(DbContextOptions<Mkt3Context> options)
+        : base(options)
+    {
     }
   
 }

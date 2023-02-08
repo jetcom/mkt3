@@ -21,6 +21,10 @@
       "PackagePath": "staticwebassets/css/custom.styles.css"
     },
     {
+      "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/css/fluent-base.css",
+      "PackagePath": "staticwebassets/css/fluent-base.css"
+    },
+    {
       "Id": "/Users/jsb/Library/CloudStorage/Dropbox/src/Mkt3/Mkt3/wwwroot/css/material-dark-base.css",
       "PackagePath": "staticwebassets/css/material-dark-base.css"
     },

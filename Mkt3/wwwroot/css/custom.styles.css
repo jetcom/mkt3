@@ -1,8 +1,12 @@
+body {
+    font-size: 100%
+}
 a, .btn-link {
     color: #e0a800;
 }
 
 .navHeader {
+
     padding: 5px;
     padding-bottom: 2px;
     background: #1e2125;
@@ -10,8 +14,9 @@ a, .btn-link {
 }
 
 .titleEdit {
-    font-size: x-large;
-    border-radius: 9999px;
+    font-size: large;
+    color: black;
+    border-radius: 5px;
 }
 
 .modal-blue {

@@ -1,11 +1,13 @@
 @page "/QuestionList"
 @page "/QuestionList/{TopicID}"
-
+@attribute [Authorize]
 @using Mkt3.Data
 @using Mkt3.Components
 @inject QuestionService QuestionService;
 @inject ExamService ExamService;
 @inject NavigationManager Navigation
+@using Microsoft.AspNetCore.Identity 
+@using System.Diagnostics
 
 
 @if (TopicID == null)
@@ -15,7 +17,8 @@
 else
 {
    //<ExamInfoComponent courseID="@CourseID" examID="@ExamID"/>-->
-    <QuestionListComponent topicID="@TopicID" onDeleteCallBack="OnDelete"/>
+
+        <QuestionListComponent topicID="@TopicID" onDeleteCallBack="OnDelete" userID="@userID"/>
 
 }
 
@@ -24,11 +27,16 @@ else
 
     [Parameter]
     public string TopicID { get; set; }
+    [CascadingParameter]
+    private string userID { get; set; }
 
-
+    [Inject]
+    UserManager<IdentityUser> userManager { get; set; }
+    
+    
     protected override async Task OnInitializedAsync()
     {
-    
+
     }
 
     private async void OnDelete()

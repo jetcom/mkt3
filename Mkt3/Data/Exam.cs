@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
@@ -7,7 +8,10 @@ namespace Mkt3.Data;
 
 public class Exam: ICloneable
 {
-
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int ID { get; set; }
+    
+    public string Owner { get; set; }
     public string courseName { get; set; }
 
     public string courseNumber { get; set; }

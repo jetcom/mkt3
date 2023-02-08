@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mkt3.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Mkt3.Migrations
 {
     [DbContext(typeof(Mkt3Context))]
-    partial class Mkt3ContextModelSnapshot : ModelSnapshot
+    [Migration("20230207210225_01_user")]
+    partial class _01user
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,16 +32,6 @@ namespace Mkt3.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("courseNumber")
-                        .HasColumnType("text");
-
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("Owner")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("courseName")
@@ -101,10 +94,6 @@ namespace Mkt3.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Owner")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int>("Points")
                         .HasColumnType("integer");
 
@@ -132,10 +121,6 @@ namespace Mkt3.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("LineLength")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Owner")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("Points")
@@ -195,10 +180,6 @@ namespace Mkt3.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Owner")
                         .IsRequired()
                         .HasColumnType("text");
 

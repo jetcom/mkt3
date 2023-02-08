@@ -1,31 +1,43 @@
 @using Mkt3.Data
 @using Mkt3.Shared
+
+@using System.Diagnostics
+@using Blazorise.Extensions
 @inject QuestionService QuestionService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
 @inject CurrentNav currentNav
 
-<h3 hidden="@editTitle">@topic.Name <img onclick="@doEdit" width="24px" src="images/pencil.png"/></h3>
-<input class="titleEdit" hidden="@(!editTitle)" id="nameEditBox"  type="text" width="30" value="@topic.Name" @onchange="@TopicChange"/>
+@{
+    if (topic == null)
+    {
+        <h3>You do not have access to this page</h3>
+    }
+    else
+    {
+        <h3 hidden="@editTitle">@topic.Name <img onclick="@doEdit" width="24px" src="images/pencil.png"/></h3>
+        <input class="titleEdit" hidden="@(!editTitle)" id="nameEditBox" type="text" width="30" value="@topic.Name" @onchange="@TopicChange"/>
 
- <RadzenDataGrid AllowFiltering="true" AllowColumnResize="false" AllowAlternatingRows="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="10" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
-                 Data="@questions" TItem="Question" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or"
-                 RowSelect="Callback" SelectionMode="DataGridSelectionMode.Single">
- <Columns>
-     <RadzenDataGridColumn TItem="Question" Property="Prompt" Filterable="true" Title="Prompt" Sortable="true"  Width="400px" TextAlign="TextAlign.Left" />
-     <RadzenDataGridColumn TItem="Question" Property="type"  Title="Type" Sortable="true" Filterable="true" Width="100px" TextAlign="TextAlign.Center" />
-         
-     <RadzenDataGridColumn TItem="Question" Property="Group" Title="Group" Sortable="true" Filterable="true"  Width="100px" />
-     <RadzenDataGridColumn TItem="Question" Width="80px" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" >
-         <Template Context="data">
-             <RadzenButton ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Shade="Shade.Darker" Icon="delete" Class="m-1" Click=@(() => Delete(data)) Text="Delete"/>
-         </Template>
-     </RadzenDataGridColumn>
- </Columns>
- </RadzenDataGrid>
+        <RadzenDataGrid AllowFiltering="true" AllowColumnResize="false" AllowAlternatingRows="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="10" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                        Data="@questions" TItem="Question" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or"
+                        RowSelect="Callback" SelectionMode="DataGridSelectionMode.Single" EmptyText="Click Add to create a new question!">
+            <Columns>
+                <RadzenDataGridColumn TItem="Question" Property="CleanPrompt" Filterable="true" Title="Prompt" Sortable="true" Width="400px" TextAlign="TextAlign.Left"/>
+                <RadzenDataGridColumn TItem="Question" Property="type" Title="Type" Sortable="true" Filterable="true" Width="100px" TextAlign="TextAlign.Center"/>
 
-<br/>
-<a href="/editQuestion/add/@TopicID" class="buttons">Add</a>    
+                <RadzenDataGridColumn TItem="Question" Property="Group" Title="Group" Sortable="true" Filterable="true" Width="100px"/>
+                <RadzenDataGridColumn TItem="Question" Width="50px" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
+                    <Template Context="data">
+                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Shade="Shade.Darker" Icon="delete" Class="m-1" Click=@(() => Delete(data)) />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+
+        <br/>
+        <a href="/editQuestion/add/@TopicID" class="buttons">Add</a>
+    }
+}
 @code {
 
     [Parameter] 
@@ -35,10 +47,14 @@
     public string CourseID { get; set; }
     
     [Parameter]
+    public string userID { get; set; }
+    
+    [Parameter]
     public EventCallback onDeleteCallBack { get; set; }
     
     [Parameter]
     public EventCallback onTopicChangedCallBack { get; set; }
+    
     
     private List<Question> questions { get; set; }
 
@@ -50,6 +66,8 @@
     
     protected override async Task OnInitializedAsync()
     {
+       
+        
         editTitle = false;   
         Refresh();
     }
@@ -62,9 +80,16 @@
 
     private async void Refresh()
     {
-        topic = await QuestionService.GetTopicsByID(Convert.ToInt32(TopicID));
-        questions = await QuestionService.GetQuestionsByTopic(Convert.ToInt32(TopicID));
-        StateHasChanged();
+        try
+        {
+            topic = await QuestionService.GetTopicsByID(Convert.ToInt32(TopicID));
+            questions = await QuestionService.GetQuestionsByTopic(Convert.ToInt32(TopicID), userID);
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine(e);
+        }
     }
 
     private void doEdit(EventArgs args)

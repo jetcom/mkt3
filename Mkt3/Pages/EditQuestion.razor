@@ -3,13 +3,15 @@
 @inject NavigationManager Navigation
 @using Mkt3.Data
 @using Mkt3.Components
+@using Microsoft.AspNetCore.Identity 
+@using Mono.TextTemplating
 
 @inject QuestionService QuestionService;
 
 <PageTitle>Question Editor</PageTitle>
 
 
-<p>Select a question type and enter values.  Click save when done.  </p>
+
 
 
 @if (_question == null)
@@ -18,9 +20,13 @@
         <em>Loading...</em>
     </p>
 }
+else if (!QuestionService.GetTopics(userID).Result.Select(t => t.ID).Contains(Convert.ToInt32(TopicID)))
+{
+    <h2>You do not have permission to add questions to this section</h2>
+}
 else
 {
-     
+    <p>Select a question type and enter values.  Click save when done.  </p>   
     <div class="form-field">
         <div class="form-field-label" for="lastNameInput">Type: </div>
         <div class="form-field-control">
@@ -50,7 +56,9 @@ else
     
     [Parameter]
     public string TopicID { get; set; }
-    
+    [CascadingParameter]
+    private string userID { get; set; }
+
 
 
     private Question? _question;
@@ -65,17 +73,27 @@ else
     
     protected override async Task OnInitializedAsync()
     {
+       
         if (questionID != null)
         {
-            _question = await QuestionService.GetQuestionAsync(questionID);
-            previousState = (Question)_question.Clone();
-            selectedType = _question.type;
+            _question = await QuestionService.GetQuestionAsync(questionID, userID);
+            if (_question == null)
+            {
+                questionID = null;
+                selectedType = "Short Answer";
+                _question = new Question(userID);
+            }
+            else
+            {
+                previousState = (Question)_question.Clone();
+                selectedType = _question.type;
+            }
 
         }
         else
         {
             selectedType = "Short Answer";
-            _question = new Question();
+            _question = new Question(userID);
         }
         showBlock(selectedType);
     }
