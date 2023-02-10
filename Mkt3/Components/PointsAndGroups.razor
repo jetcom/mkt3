@@ -4,6 +4,7 @@
 
 @using Group = Mkt3.Data.Group
 @inject QuestionService QuestionService;
+@inject GroupService GroupService;
 
 <div class="form-field">
     <div class="form-field-label" for="lastNameInput">Points: </div>
@@ -106,7 +107,7 @@
     {
         if (selectedGroup != -1)
         {
-            var currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup), userID);
+            var currentGroup = GroupService.GetGroup(Convert.ToInt32(selectedGroup), userID);
             currentGroupName = currentGroup.Name;
             currentGroupPoints = currentGroup.Points.ToString();
         }
@@ -116,11 +117,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        sessionGroups = QuestionService.GetAllGroups(TopicID, userID);
+        sessionGroups = GroupService.GetAllGroups(TopicID, userID);
         setGroup(question.GroupID);
         if (selectedGroup != null && selectedGroup != 0)
         {
-            var currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup), userID);
+            var currentGroup = GroupService.GetGroup(Convert.ToInt32(selectedGroup), userID);
             currentGroupName = currentGroup.Name;
             currentGroupPoints = currentGroup.Points.ToString();
         }
@@ -129,8 +130,8 @@
     
     private async Task<Task> DeleteGroup()
     {
-        var currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup), userID);
-        QuestionService.DeleteGroup(currentGroup);
+        var currentGroup = GroupService.GetGroup(Convert.ToInt32(selectedGroup), userID);
+        GroupService.DeleteGroup(currentGroup);
         selectedGroup = 0;
         return modalRef.Hide();
         
@@ -141,14 +142,14 @@
         var currentGroup = new Data.Group(userID);
         if (selectedGroup != -1)
         {
-            currentGroup = QuestionService.GetGroup(Convert.ToInt32(selectedGroup), userID);
+            currentGroup = GroupService.GetGroup(Convert.ToInt32(selectedGroup), userID);
         }
         
         currentGroup.Name = currentGroupName;
         currentGroup.Points = Convert.ToInt32(currentGroupPoints);
         currentGroup.TopicID = Convert.ToInt32(TopicID);
-        var r = await QuestionService.UpdateGroup(currentGroup);
-        sessionGroups = QuestionService.GetAllGroups(TopicID, userID);
+        var r = await GroupService.UpdateGroup(currentGroup);
+        sessionGroups = GroupService.GetAllGroups(TopicID, userID);
         selectedGroup = r;
    
         return modalRef.Hide();
@@ -180,7 +181,7 @@
         }
         else
         {
-            var group = QuestionService.GetGroup(Convert.ToInt32(selected), userID);
+            var group = GroupService.GetGroup(Convert.ToInt32(selected), userID);
             if (group == null)
             {
                 selected = 0;

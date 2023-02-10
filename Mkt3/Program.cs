@@ -46,6 +46,8 @@ builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 
 builder.Services.AddScoped<QuestionService>();
 builder.Services.AddScoped<ExamService>();
+builder.Services.AddScoped<TopicService>();
+builder.Services.AddScoped<GroupService>();
 builder.Services.AddScoped<CurrentNav>();
 builder.Services.AddScoped<DialogService>();
 builder.Services.AddScoped<NotificationService>();

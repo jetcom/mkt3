@@ -1,0 +1,195 @@
+@using Mkt3.Data
+@using Mono.TextTemplating
+@using Blazorise.Extensions
+@using System.Diagnostics
+
+@inject QuestionService QuestionService;
+
+@if (question == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <EditForm Model="@question" OnValidSubmit="@HandleValidSubmit">
+        <div class="form-fields">
+        
+            <QuestionPrompt question="question"/>
+           
+            @{ solIndex = 0; }
+            @foreach (var sol in _solutions)
+            {
+                <div class="form-field">
+                    
+                    <div class="form-field-label" for="lastNameInput">
+                        @if (solIndex == 0  && _solutions.Count == 1)
+                        {
+                            <span>Correct&nbsp;Answer:</span>
+                        }
+                        else if (solIndex == 0  && _solutions.Count > 1)
+                        {
+                            <span>Correct&nbsp;Answers: </span>
+                        }
+                    </div>
+                    @{ var index = solIndex;}
+                    <div class="form-field-control">
+                        <RadzenTextBox @bind-Value="@_solutions[index].value" Class="w-100"/>
+                    </div>
+                    <div class="form-field-control" style="vertical-align: middle; white-space: nowrap; padding-left: 0px">
+                    @if (_solutions.Count > 1)
+                    {
+                        <img style="width:24px; margin-right: 3px;" src="images/minus.png" @onclick="@(x => deleteSolution(index))" />
+                    }                        
+                    @if (_solutions.Count - 1 == solIndex)
+                    {
+                        <img style="width:24px" src="images/plus.png" onclick="@addSolution"/>
+                    }
+                
+                    </div>
+                </div>
+                solIndex++;
+            }
+    
+           @{ wrongIndex = 0; }
+                @foreach (var sol in _wrongAnswers)
+                {
+                    <div class="form-field">
+                        
+                        <div class="form-field-label" for="lastNameInput">
+                            @if (wrongIndex == 0  && _wrongAnswers.Count == 1)
+                            {
+                                <span>Wrong&nbsp;Answer:</span>
+                            }
+                            else if (wrongIndex == 0  && _wrongAnswers.Count > 1)
+                            {
+                                <span>Wrong&nbsp;Answers: </span>
+                            }
+                        </div>
+                        @{ var index = wrongIndex;}
+                        <div class="form-field-control">
+                            <RadzenTextBox @bind-Value="@_wrongAnswers[index].value" Class="w-100"/>
+                        </div>
+                        <div class="form-field-control" style="vertical-align: middle; white-space: nowrap; padding-left: 0px">
+                           @if (_wrongAnswers.Count > 1)
+                            {
+                                <img style="width:24px; margin-right: 3px;" src="images/minus.png" @onclick="@(x => deleteWrongAnswer(index))" />
+                            }
+                            @if (_wrongAnswers.Count - 1 == wrongIndex)
+                            {
+
+                                <img style="width:24px" src="images/plus.png" onclick="@addWrongAnswer"/>
+
+                            }
+
+
+                        </div>
+                    </div>
+                    wrongIndex++;
+                }
+            
+            <PointsAndGroups question=question TopicID="@TopicID" />
+            <div class="form-field">
+                <div class="form-field-label" for="lastNameInput"> </div>
+                <div class="form-field-control">
+                    <button type="submit" class="buttons">Save</button>
+                    <button type="button" class="buttons" @onclick="@(async () => ResetForm())">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+
+   
+    
+}
+
+@code {
+    [Parameter]
+    public Question? question { get; set; }
+    
+    [Parameter]
+    public EventCallback onResetClick { get; set; }
+    [Parameter]
+    public EventCallback onSaveClick { get; set; }
+    [Parameter]
+    public string TopicID { get; set; }
+    
+    private int solIndex { get; set; }
+    
+    private int wrongIndex { get; set; }
+
+    private class Answer
+    {
+        public string value { get; set; }
+    }
+
+    private List<Answer> _solutions;
+    private List<Answer> _wrongAnswers;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        _solutions = new List<Answer>();
+        _wrongAnswers = new List<Answer>();
+        Debug.Write("Short Answer");
+        foreach (var s in question.Solutions)
+        {
+            _solutions.Add(new Answer() { value = s});
+        }
+        foreach (var wa in question.WrongAnswers)
+        {
+            _wrongAnswers.Add(new Answer() { value = wa});
+        }
+    }
+    private async Task HandleValidSubmit()
+    {
+        question.type = "Multiple Choice";
+        question.Solutions.Clear();
+        question.WrongAnswers.Clear();
+        foreach (var s in _solutions)
+        {
+            question.Solutions.Add(s.value);
+        }
+        
+        foreach (var wa in _wrongAnswers)
+        {
+            question.WrongAnswers.Add(wa.value);
+        }
+        if (await QuestionService.UpdateQuestion(question, Convert.ToInt32(TopicID)))
+        {
+            await onSaveClick.InvokeAsync();
+        }
+    }
+
+    public void addWrongAnswer()
+    {
+    //question.Solutions.Add("");
+        _wrongAnswers.Add(new Answer());
+        StateHasChanged();
+    }
+    public void deleteWrongAnswer(int index)
+    {
+        _wrongAnswers.RemoveAt(index);
+    // question.Solutions.RemoveAt(question.Solutions.Count-1);
+        StateHasChanged();
+    }
+    
+    public void addSolution()
+    {
+        //question.Solutions.Add("");
+        _solutions.Add(new Answer());
+        StateHasChanged();
+    }
+    public void deleteSolution(int index)
+    {
+        _solutions.RemoveAt(index);
+       // question.Solutions.RemoveAt(question.Solutions.Count-1);
+        StateHasChanged();
+    }
+    
+    private async void ResetForm()
+    {
+        await onResetClick.InvokeAsync();
+        
+    }
+}

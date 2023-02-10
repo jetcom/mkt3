@@ -2,6 +2,7 @@
 @using Mkt3.Components
 @inject NavigationManager Navigation
 @inject QuestionService QuestionService
+@inject TopicService TopicService
 @inject CurrentNav currentNav
 
 
@@ -115,7 +116,7 @@
 
     private  Task SaveNewFolderModal()
     {
-        var topics = QuestionService.GetTopics(userID).Result.Select(t=>t.Course);
+        var topics = TopicService.GetTopics(userID).Result.Select(t=>t.Course);
         if (topics.Contains(newFolderName))
         {
             
@@ -124,7 +125,7 @@
         else
         {
             myAlert.Hide();
-            QuestionService.AddTopic(newFolderName);
+            TopicService.AddTopic(newFolderName);
             newFolderName = "";
             UpdateTree();
             return newFolderRef.Hide();
@@ -144,7 +145,7 @@
 
     private async void OnTopicChanged()
     {
-        var allTopics = await QuestionService.GetTopics(userID);
+        var allTopics = await TopicService.GetTopics(userID);
 
         foreach (var topic in  allTopics.DistinctBy(e => e.Course))
         {
@@ -157,7 +158,7 @@
 
     private async void UpdateTree()
     {
-        var allTopics = await QuestionService.GetTopics(userID);
+        var allTopics = await TopicService.GetTopics(userID);
         var currentItems = Items.Select(i => i.Text).ToList();
         Item currentItem = null;
         foreach (var topic in allTopics)

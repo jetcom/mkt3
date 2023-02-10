@@ -5,7 +5,7 @@
 @using Mkt3.Components
 @using Microsoft.AspNetCore.Identity 
 @using Mono.TextTemplating
-
+@inject TopicService TopicService;
 @inject QuestionService QuestionService;
 
 <PageTitle>Question Editor</PageTitle>
@@ -20,7 +20,7 @@
         <em>Loading...</em>
     </p>
 }
-else if (!QuestionService.GetTopics(userID).Result.Select(t => t.ID).Contains(Convert.ToInt32(TopicID)))
+else if (!TopicService.GetTopics(userID).Result.Select(t => t.ID).Contains(Convert.ToInt32(TopicID)))
 {
     <h2>You do not have permission to add questions to this section</h2>
 }
@@ -46,6 +46,10 @@ else
     @if (_showLA)
     {
         <LongAnswerComponent question=_question TopicID="@TopicID" onResetClick="Reset" onSaveClick="Save"/>
+    }
+    @if (_showMC)
+    {
+        <MultipleChoiceComponent question=_question TopicID="@TopicID" onResetClick="Reset" onSaveClick="Save"/>
     }
     
 }

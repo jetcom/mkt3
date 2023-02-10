@@ -38,15 +38,14 @@ else
                         <RadzenTextBox @bind-Value="@_solutions[index].value" Class="w-100"/>
                     </div>
                     <div class="form-field-control" style="vertical-align: middle; padding-left:  0px;">
-                    @if (_solutions.Count - 1 == solIndex)
-                    {
-                    
-                        <img style="width:24px" src="images/plus.png" onclick="@addSolution"/>
-                        if (_solutions.Count > 1)
+                     @if (_solutions.Count > 1)
                         {
-                            <img style="width:24px; margin-left: 5px;" src="images/minus.png" onclick="@deleteSolution"/>
+                            <img style="width:24px; margin-right: 3px;" src="images/minus.png" @onclick="@(x => deleteSolution(index))" />
+                        }  
+                        @if (_solutions.Count - 1 == solIndex)
+                        {
+                            <img style="width:24px" src="images/plus.png" onclick="@addSolution"/>
                         }
-                    }
                     </div>
                 </div>
                 solIndex++;
@@ -104,21 +103,22 @@ else
         {
             question.Solutions.Add(s.value);
         }
-        if (await QuestionService.Update(question, Convert.ToInt32(TopicID)))
+        if (await QuestionService.UpdateQuestion(question, Convert.ToInt32(TopicID)))
         {
             await onSaveClick.InvokeAsync();
         }
     }
 
-    public void addSolution()
+    private void addSolution()
     {
         //question.Solutions.Add("");
         _solutions.Add(new Solution());
         StateHasChanged();
     }
-    public void deleteSolution()
+
+    private void deleteSolution(int index)
     {
-        _solutions.RemoveAt(_solutions.Count-1);
+        _solutions.RemoveAt(index);
        // question.Solutions.RemoveAt(question.Solutions.Count-1);
         StateHasChanged();
     }

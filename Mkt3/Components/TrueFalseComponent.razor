@@ -65,7 +65,7 @@ else
     {
         question.Solutions[0] = solution;
         question.type = "True/False";
-        if (await QuestionService.Update(question, Convert.ToInt32(TopicID)))
+        if (await QuestionService.UpdateQuestion(question, Convert.ToInt32(TopicID)))
         {
  
 
