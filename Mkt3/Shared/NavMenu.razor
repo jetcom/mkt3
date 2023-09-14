@@ -114,21 +114,25 @@
         return newFolderRef.Hide();
     }
 
-    private  Task SaveNewFolderModal()
+    private  async Task SaveNewFolderModal()
     {
         var topics = TopicService.GetTopics(userID).Result.Select(t=>t.Course);
         if (topics.Contains(newFolderName))
         {
             
-            return myAlert.Show();
+            await myAlert.Show();
         }
         else
         {
-            myAlert.Hide();
-            TopicService.AddTopic(newFolderName);
+            await myAlert.Hide();
+
+            if (await TopicService.AddTopic(newFolderName, userID))
+            {
+                UpdateTree();
+            }
+
             newFolderName = "";
-            UpdateTree();
-            return newFolderRef.Hide();
+            await newFolderRef.Hide();
         }
   
     }

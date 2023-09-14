@@ -51,7 +51,10 @@ else
     {
         <MultipleChoiceComponent question=_question TopicID="@TopicID" onResetClick="Reset" onSaveClick="Save"/>
     }
-    
+    @if (_showMP)
+    {
+        <MultiPartComponent question=_question TopicID="@TopicID" onResetClick="Reset" onSaveClick="Save"/>
+    } 
 }
 @code {
 
@@ -70,8 +73,9 @@ else
     private bool _showSA = false;
     private bool _showLA = false;
     private bool _showMC = false;
+    private bool _showMP = false;
     private Question? previousState;
-    string[] types = new string[] { "True/False", "Short Answer", "Long Answer", "Multiple Choice" };
+    string[] types = new string[] { "True/False", "Short Answer", "Long Answer", "Multiple Choice", "Multiple Parts" };
     private string selectedType;
     
     
@@ -116,6 +120,7 @@ else
         _showSA = false;
         _showLA = false;
         _showMC = false;
+        _showMP = false;
         if (type == "True/False")
         {
             _showTF = true;
@@ -131,6 +136,10 @@ else
         else if (type == "Multiple Choice")
         {
             _showMC = true;
+        }
+        else if (type == "Multiple Parts")
+        {
+            _showMP = true;
         }
         selectedType = type;
 

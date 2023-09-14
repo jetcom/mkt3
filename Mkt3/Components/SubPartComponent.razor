@@ -1,0 +1,59 @@
+@using Mkt3.Data
+@using Mono.TextTemplating
+@using Blazorise.Extensions
+@using System.Diagnostics
+
+@inject QuestionService QuestionService;
+
+@if (true == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <p>Prompt:</p>
+    <RadzenHtmlEditor  style="height: 150px; width: 550px;" UploadUrl="upload/image">
+        <RadzenHtmlEditorUndo/>
+        <RadzenHtmlEditorRedo/>
+        <RadzenHtmlEditorSeparator/>
+        <RadzenHtmlEditorBold/>
+        <RadzenHtmlEditorItalic/>
+        <RadzenHtmlEditorUnderline/>
+        <RadzenHtmlEditorSeparator/>
+        <RadzenHtmlEditorOrderedList/>
+        <RadzenHtmlEditorUnorderedList/>
+        <RadzenHtmlEditorAlignLeft/>
+        <RadzenHtmlEditorAlignCenter/>
+        <RadzenHtmlEditorAlignRight/>
+    </RadzenHtmlEditor>
+    <br/>
+    <p>Solution:</p>
+    <RadzenHtmlEditor style="height: 150px; width: 550px;" UploadUrl="upload/image">
+        <RadzenHtmlEditorUndo/>
+        <RadzenHtmlEditorRedo/>
+        <RadzenHtmlEditorSeparator/>
+        <RadzenHtmlEditorBold/>
+        <RadzenHtmlEditorItalic/>
+        <RadzenHtmlEditorUnderline/>
+        <RadzenHtmlEditorSeparator/>
+        <RadzenHtmlEditorOrderedList/>
+        <RadzenHtmlEditorUnorderedList/>
+        <RadzenHtmlEditorAlignLeft/>
+        <RadzenHtmlEditorAlignCenter/>
+        <RadzenHtmlEditorAlignRight/>
+    </RadzenHtmlEditor>
+//   <RadzenNumeric  @bind-Value="@question.Points"/>
+<RadzenNumeric TValue="int" />
+}
+
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+  
+    }
+
+}

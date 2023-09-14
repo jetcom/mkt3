@@ -3,6 +3,7 @@ using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using Blazorise.RichTextEdit;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -18,8 +19,8 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
-                       throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = @"Server=localhost;Username=mkt;Password=mkt3;Database=mkt";
+//"builder.Environment("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 builder.Services.AddDbContextFactory<Mkt3Context>(
     options =>
@@ -56,6 +57,7 @@ builder.Services.AddScoped<ContextMenuService>();
 builder.Services
     .AddBlazoriseRichTextEdit( );
 
+
 builder.Services
     .AddBlazorise( options =>
     {
@@ -63,6 +65,7 @@ builder.Services
     } )
     .AddBootstrapProviders()
     .AddFontAwesomeIcons();
+
 
 var app = builder.Build();
 
@@ -77,6 +80,7 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 
 app.UseHttpsRedirection();
 

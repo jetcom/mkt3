@@ -60,6 +60,7 @@
     private List<Question> questions { get; set; }
 
     private Question currentQuestion { get; set; }
+    private bool deleteClicked = false;
     
     private Topic topic;
     private bool editTitle { get; set; }
@@ -121,8 +122,8 @@
     private async Task Delete(Question question)
     {
 
-
-        if (!await JSRuntime.InvokeAsync<bool>("confirm","Are you sure you want to delete: " + question.QuestionLabel + "?")) return;
+        deleteClicked = true;
+        if (!await JSRuntime.InvokeAsync<bool>("confirm","Are you sure you want to delete: " + question.Prompt + "?")) return;
         var result = (QuestionService.DeleteQuestion(question));
         StateHasChanged();
         Refresh();
@@ -132,7 +133,15 @@
 
     private void Callback(Question q)
     {
-        NavigationManager.NavigateTo("editQuestion/"+TopicID+"/"+q.ID);
+        if (!deleteClicked)
+        {
+            NavigationManager.NavigateTo("editQuestion/" + TopicID + "/" + q.ID);
+        }
+        else
+        {
+            deleteClicked = false;
+       
+        }
     }
 
 }

@@ -39,18 +39,20 @@ public class TopicService
         return true;
     }
 
-    public async Task AddTopic(string TopicName)
+    public async Task<bool> AddTopic(string TopicName, string owner)
     {
         try
         {
             //await using var ctx = new Mkt3Context();
-            var t = new Topic { Course = TopicName, Name = "Default Pool" };
+            var t = new Topic { Course = TopicName, Name = "Default Pool", Owner = owner};
             ctx.Topics.Add(t);
             await ctx.SaveChangesAsync();
+            return true;
         }
         catch (Exception e)
         {
-           Debug.WriteLine(e); 
+           Debug.WriteLine(e);
+           return false;
         }
 
     }
